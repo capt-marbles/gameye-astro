@@ -11,6 +11,7 @@
     "profile:marketing": "node scripts/profile-marketing-build.mjs --json=reports/performance/marketing-build-profile.json --markdown=reports/performance/marketing-build-profile.md",
     "build:redirects": "node scripts/build-cloudflare-redirects.mjs",
     "check:redirects": "node scripts/check-cloudflare-redirects.mjs",
+    "check:top25": "node scripts/check-top25-parity.mjs",
     "verify:redirects": "node scripts/verify-cloudflare-redirects.mjs",
     "check:parity": "node scripts/check-llms-sitemap-parity.mjs",
     "check:launch": "node scripts/check-launch-readiness.mjs"

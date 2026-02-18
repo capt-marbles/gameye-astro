@@ -1,0 +1,125 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Privacy policy — Gameye Infrastructure"
+  description="Privacy policy for Gameye Infrastructure, including processing purposes, cookies, API data handling, and contact rights."
+  canonical="https://gameye.com/privacy-policy/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg"
+  ogImageAlt="Gameye Privacy Policy"
+  schemaType="WebPage"
+  schemaName="Privacy policy"
+>
+  <section class="section legal-hero">
+    <div class="container narrow">
+      <p class="subtitle">Legal</p>
+      <h1>Privacy Statement of Gameye B.V.</h1>
+      <p class="lead">
+        Gameye processes personal data to operate its website, customer account workflows, and API platform
+        capabilities. This page summarizes the core processing and privacy commitments.
+      </p>
+      <p class="updated"><strong>Last reviewed:</strong> February 18, 2026</p>
+    </div>
+  </section>
+
+  <section class="section legal-content">
+    <div class="container narrow prose">
+      <h2>1. Scope and principles</h2>
+      <p>
+        Gameye B.V. handles personal data in line with applicable data-protection requirements, including GDPR
+        principles of purpose limitation, data minimization, security, and transparency.
+      </p>
+      <ul>
+        <li>Data is processed only for identified service and business purposes.</li>
+        <li>Access to personal data is limited to authorized personnel and providers.</li>
+        <li>Data subjects can request access, correction, deletion, or portability where applicable.</li>
+      </ul>
+
+      <h2>2. Website and account data</h2>
+      <p>
+        When creating or managing a customer account, Gameye may process organization and contact details such as
+        company name, contact person, billing details, phone number, and email address. This processing supports
+        account administration, invoicing, and service delivery.
+      </p>
+
+      <h2>3. Cookies and analytics</h2>
+      <p>
+        Gameye uses cookies and similar technologies to operate core website functionality and measure usage trends.
+        Users can manage cookie preferences via browser controls and consent tooling.
+      </p>
+      <p>
+        Third-party analytics providers may process technical usage data under their own privacy terms. Please review
+        provider documentation for detailed processing behavior.
+      </p>
+
+      <h2>4. API and service data</h2>
+      <p>
+        Operation of multiplayer orchestration services may involve processing technical identifiers and gameplay
+        telemetry required to run sessions, monitor system health, and troubleshoot incidents.
+      </p>
+      <ul>
+        <li>Network identifiers required for connectivity and routing.</li>
+        <li>Operational telemetry related to sessions and infrastructure events.</li>
+        <li>Support metadata required for diagnostics and incident response.</li>
+      </ul>
+
+      <h2>5. Data sharing and transfers</h2>
+      <p>
+        Gameye may use vetted sub-processors to deliver hosting, observability, support, and business operations.
+        Where international transfers occur, appropriate legal safeguards are applied.
+      </p>
+
+      <h2>6. Security and retention</h2>
+      <p>
+        Gameye applies organizational and technical safeguards intended to reduce unauthorized access, loss, or misuse
+        of personal data. Retention periods depend on contractual, legal, and operational requirements.
+      </p>
+
+      <h2>7. Your rights and contact</h2>
+      <p>
+        You can contact Gameye regarding data-processing questions or rights requests. If unresolved, you may lodge a
+        complaint with your competent supervisory authority.
+      </p>
+      <p>
+        <strong>Gameye B.V.</strong><br />
+        Goudsesingel 136<br />
+        3011 KD Rotterdam<br />
+        <a href="mailto:support@gameye.com">support@gameye.com</a>
+      </p>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .lead {
+    margin-top: 1rem;
+    max-width: 68ch;
+    font-size: 1.08rem;
+  }
+
+  .updated {
+    margin-top: 0.9rem;
+  }
+
+  .prose {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .prose h2 {
+    margin-top: 1.4rem;
+  }
+
+  .prose ul {
+    margin: 0.2rem 0 0.2rem 1.1rem;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .prose a {
+    color: var(--gy-color-dark-blue);
+  }
+</style>
