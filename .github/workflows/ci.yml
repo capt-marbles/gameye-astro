@@ -34,3 +34,6 @@ jobs:
 
       - name: Validate Cloudflare redirects
         run: npm run check:redirects
+
+      - name: Validate top-25 parity handling
+        run: npm run check:top25

@@ -31,6 +31,7 @@ These reports track HTML/JS/CSS footprint and budget checks to support CWV harde
 - `npm run profile:marketing`: generate build footprint report
 - `npm run build:redirects`: generate Cloudflare Pages `_redirects` from the parity CSV source map
 - `npm run check:redirects`: validate `_redirects` integrity against the source CSV
+- `npm run check:top25`: validate top-25 launch-priority URLs are migrated or redirected
 - `npm run verify:redirects`: verify deployed redirect behavior and emit a CSV result report
 - `npm run check:parity`: validate `llms.txt`, sitemap outputs, and docs bridge parity
 - `npm run check:launch`: run launch QA checks for links, sitemap, bridge routes, and analytics events
@@ -88,6 +89,7 @@ npm run check:launch
 Redirect source map:
 
 - `redirects/gameye-redirects-import-2026-02-18.csv`
+- `redirects/gameye-top-25-must-migrate-2026-02-18.csv`
 
 Generated artifact:
 
@@ -99,6 +101,7 @@ Workflow:
 npm run build:redirects
 npm run check:redirects
 npm run build
+npm run check:top25
 ```
 
 Post-deploy verification (Preview/Production):
@@ -108,3 +111,20 @@ npm run verify:redirects -- --base-url=https://<your-cloudflare-pages-domain>
 ```
 
 The verifier writes a CSV report under `reports/redirects/` with observed status/location for each mapped URL.
+
+## Top-25 Parity Execution (GAM-25)
+
+The top-25 launch-priority URLs are audited against built routes and redirect rules.
+
+```sh
+npm run check:top25
+```
+
+Outputs:
+
+- `reports/parity/top25-parity-report.md` (route-by-route handling evidence)
+
+Pass criteria:
+
+- each top-25 source URL is either a first-class route in `dist/` or a valid 301 in `public/_redirects`
+- legal routes (`/privacy-policy/`, `/terms-and-conditions/`) are explicitly handled
