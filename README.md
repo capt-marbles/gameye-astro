@@ -43,3 +43,11 @@ Environment variables:
 - `PUBLIC_CHATBOT_ENABLED` (default: `true`)
 - `PUBLIC_CHATBOT_API_ENDPOINT` (optional; when empty the loader uses a local fallback knowledge mode)
 - `PUBLIC_CHATBOT_MIN_CONFIDENCE` (default: `0.62`)
+
+## Unified Navigation + Cross-Linking (GAM-21)
+
+This project now includes shared cross-site navigation patterns with `docs.gameye.com`:
+
+- header links include canonical Docs + API paths
+- docs bridge pages route to canonical docs destinations
+- footer resources include direct docs, API, and troubleshooting links
