@@ -29,6 +29,7 @@ These reports track HTML/JS/CSS footprint and budget checks to support CWV harde
 - `npm run build`: production build to `dist/`
 - `npm run preview`: preview built site
 - `npm run profile:marketing`: generate build footprint report
+- `npm run check:parity`: validate `llms.txt`, sitemap outputs, and docs bridge parity
 
 ## AI Chatbot Integration (GAM-20)
 
@@ -51,3 +52,13 @@ This project now includes shared cross-site navigation patterns with `docs.gamey
 - header links include canonical Docs + API paths
 - docs bridge pages route to canonical docs destinations
 - footer resources include direct docs, API, and troubleshooting links
+
+## llms/sitemap parity automation (GAM-22)
+
+`public/llms.txt` defines AI-ingestion anchors for the marketing site and canonical docs routes.
+
+`npm run check:parity` enforces:
+
+- required `llms.txt` URLs (sitemap, docs hub, docs canonical routes)
+- sitemap expectations (`/docs/` included, noindex bridge pages excluded)
+- docs bridge index links match canonical docs destinations
