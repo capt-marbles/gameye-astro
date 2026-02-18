@@ -1,0 +1,213 @@
+---
+import { getCollection } from 'astro:content';
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+import { estimateReadingMinutes, formatBlogDate, sortBlogPosts } from '../../utils/blog';
+
+const posts = sortBlogPosts(await getCollection('blog'));
+const featuredPost = posts.find((post) => post.data.featured) ?? posts[0];
+const listPosts = posts.filter((post) => post.slug !== featuredPost?.slug);
+
+const listItemStructuredData = {
+  '@type': 'ItemList',
+  name: 'Gameye Blog Articles',
+  itemListElement: posts.map((post, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: `https://gameye.com/blog/${post.slug}/`,
+    name: post.data.title,
+  })),
+};
+
+const breadcrumbStructuredData = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://gameye.com/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Blog',
+      item: 'https://gameye.com/blog/',
+    },
+  ],
+};
+---
+
+<MarketingPageLayout
+  title="Gameye Blog: Multiplayer infrastructure insights"
+  description="Read Gameye updates, migration guides, launch operations playbooks, and multiplayer infrastructure strategy articles."
+  canonical="https://gameye.com/blog/"
+  ogType="website"
+  ogImage={featuredPost?.data.coverImage ?? 'https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg'}
+  ogImageAlt="Gameye blog"
+  schemaType="Blog"
+  schemaName="Gameye Blog"
+  structuredData={[listItemStructuredData, breadcrumbStructuredData]}
+>
+  <section class="section page-hero">
+    <div class="container">
+      <p class="subtitle">Blog</p>
+      <h1>Infrastructure insights for multiplayer teams.</h1>
+      <p class="lead">
+        Editorial content migrated from WordPress into Astro templates, focused on orchestration strategy, migration,
+        launch readiness, and live operations decision-making.
+      </p>
+    </div>
+  </section>
+
+  {featuredPost && (
+    <section class="section">
+      <div class="container">
+        <article class="featured-card">
+          <div class="meta">
+            <p class="kicker">Featured article</p>
+            <h2>{featuredPost.data.title}</h2>
+            <p>{featuredPost.data.excerpt}</p>
+            <div class="meta-row">
+              <span>{formatBlogDate(featuredPost.data.publishDate)}</span>
+              <span>{estimateReadingMinutes(featuredPost.body)} min read</span>
+              <span>{featuredPost.data.category}</span>
+            </div>
+            <a class="button primary" href={`/blog/${featuredPost.slug}/`}>Read article</a>
+          </div>
+          {featuredPost.data.coverImage && (
+            <img
+              src={featuredPost.data.coverImage}
+              alt={featuredPost.data.coverImageAlt ?? featuredPost.data.title}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </article>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container cards">
+      {listPosts.map((post) => (
+        <article class="card">
+          <p class="kicker">{post.data.category}</p>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.excerpt}</p>
+          <div class="meta-row">
+            <span>{formatBlogDate(post.data.publishDate)}</span>
+            <span>{estimateReadingMinutes(post.body)} min read</span>
+          </div>
+          <a href={`/blog/${post.slug}/`}>Open article</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/comparison/">Comparison cluster</a>
+      <a href="/pricing/">Pricing estimator</a>
+      <a href="/platform/">Platform overview</a>
+      <a href="/docs/">Developer docs</a>
+      <a href="/contact-us/">Talk to the team</a>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .page-hero .lead {
+    margin-top: 1rem;
+    max-width: 72ch;
+    font-size: 1.12rem;
+  }
+
+  .featured-card {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-white);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.25rem;
+    padding: 1.2rem;
+    align-items: center;
+  }
+
+  .featured-card .meta {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .featured-card h2 {
+    font-size: 2.2rem;
+  }
+
+  .featured-card img {
+    width: 100%;
+    border-radius: var(--gy-radius-md);
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 14%, #fff);
+  }
+
+  .kicker {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gy-color-alt-dark-blue);
+    font-weight: 500;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    background: var(--gy-color-white);
+    border-radius: var(--gy-radius-lg);
+    padding: 1rem;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .card h3 {
+    font-size: 1.35rem;
+    font-weight: 500;
+  }
+
+  .card a {
+    color: var(--gy-color-alt-dark-blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  @media (max-width: 1040px) {
+    .featured-card,
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
