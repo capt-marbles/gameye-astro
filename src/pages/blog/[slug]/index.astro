@@ -1,0 +1,303 @@
+---
+import { getCollection } from 'astro:content';
+import MarketingPageLayout from '../../../layouts/MarketingPageLayout.astro';
+import type { BlogEntry } from '../../../utils/blog';
+import { estimateReadingMinutes, formatBlogDate, sortBlogPosts } from '../../../utils/blog';
+
+export async function getStaticPaths() {
+  const posts = sortBlogPosts(await getCollection('blog'));
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post, posts },
+  }));
+}
+
+interface Props {
+  post: BlogEntry;
+  posts: BlogEntry[];
+}
+
+const { post, posts } = Astro.props as Props;
+const canonical = `https://gameye.com/blog/${post.slug}/`;
+const { Content } = await post.render();
+const readingMinutes = estimateReadingMinutes(post.body);
+
+const relatedPosts = posts.filter((entry) => entry.slug !== post.slug).slice(0, 3);
+
+const blogPostingStructuredData = {
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.excerpt,
+  datePublished: post.data.publishDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.publishDate).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: post.data.author,
+  },
+  image: post.data.coverImage,
+  articleSection: post.data.category,
+  keywords: post.data.tags,
+  mainEntityOfPage: canonical,
+};
+
+const breadcrumbStructuredData = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://gameye.com/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Blog',
+      item: 'https://gameye.com/blog/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: post.data.title,
+      item: canonical,
+    },
+  ],
+};
+---
+
+<MarketingPageLayout
+  title={post.data.title}
+  description={post.data.excerpt}
+  canonical={canonical}
+  ogType="article"
+  ogImage={post.data.coverImage ?? 'https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg'}
+  ogImageAlt={post.data.coverImageAlt ?? post.data.title}
+  schemaType="BlogPosting"
+  schemaName={post.data.title}
+  structuredData={[blogPostingStructuredData, breadcrumbStructuredData]}
+>
+  <section class="section post-hero">
+    <div class="container narrow">
+      <p class="subtitle">Blog · {post.data.category}</p>
+      <h1>{post.data.title}</h1>
+      <p class="excerpt">{post.data.excerpt}</p>
+      <div class="meta-row">
+        <span>{formatBlogDate(post.data.publishDate)}</span>
+        <span>{readingMinutes} min read</span>
+        <span>{post.data.author}</span>
+      </div>
+    </div>
+  </section>
+
+  {post.data.coverImage && (
+    <section class="section cover-wrap">
+      <div class="container narrow">
+        <img
+          class="cover-image"
+          src={post.data.coverImage}
+          alt={post.data.coverImageAlt ?? post.data.title}
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container narrow post-content-wrap">
+      <article class="post-content">
+        <Content />
+      </article>
+
+      <aside class="post-cta">
+        <h2>Planning infrastructure changes?</h2>
+        <p>Map your current workload and get a migration-ready recommendation from the Gameye team.</p>
+        <div class="actions">
+          <a class="button primary" href="/contact-us/">Book a discussion</a>
+          <a class="button secondary" href="/pricing/">Open pricing estimator</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {relatedPosts.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="related-title">Related articles</h2>
+        <div class="related-grid">
+          {relatedPosts.map((entry) => (
+            <article class="related-card">
+              <p class="kicker">{entry.data.category}</p>
+              <h3>{entry.data.title}</h3>
+              <p>{entry.data.excerpt}</p>
+              <a href={`/blog/${entry.slug}/`}>Read article</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/blog/">Back to blog hub</a>
+      <a href="/comparison/">Comparison cluster</a>
+      <a href="/platform/">Platform overview</a>
+      <a href="/docs/">Developer docs</a>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .post-hero .excerpt {
+    margin-top: 0.8rem;
+    max-width: 72ch;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  .meta-row {
+    margin-top: 0.85rem;
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    color: var(--gy-color-alt-dark-blue);
+    font-size: 0.92rem;
+  }
+
+  .cover-wrap {
+    padding-top: 0;
+  }
+
+  .cover-image {
+    width: 100%;
+    border-radius: var(--gy-radius-lg);
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+  }
+
+  .post-content-wrap {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .post-content {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-white);
+    padding: 1.35rem;
+  }
+
+  .post-content :global(h2) {
+    margin-top: 1.45rem;
+    font-size: 2rem;
+  }
+
+  .post-content :global(h3) {
+    margin-top: 1.1rem;
+    font-size: 1.45rem;
+    font-weight: 500;
+  }
+
+  .post-content :global(p) {
+    margin-top: 0.8rem;
+    line-height: 1.65;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    margin-top: 0.8rem;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .post-content :global(blockquote) {
+    margin: 1rem 0;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--gy-color-light-blue);
+    background: var(--gy-color-bg-alt);
+    border-radius: 0 var(--gy-radius-sm) var(--gy-radius-sm) 0;
+  }
+
+  .post-content :global(hr) {
+    margin: 1.5rem 0;
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+  }
+
+  .post-cta {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-bg-alt);
+    padding: 1.2rem;
+  }
+
+  .post-cta p {
+    margin-top: 0.7rem;
+  }
+
+  .post-cta .actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .related-title {
+    margin-bottom: 0.9rem;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .related-card {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-white);
+    padding: 1rem;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .kicker {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gy-color-alt-dark-blue);
+    font-weight: 500;
+  }
+
+  .related-card h3 {
+    font-size: 1.35rem;
+    font-weight: 500;
+  }
+
+  .related-card a {
+    color: var(--gy-color-alt-dark-blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  @media (max-width: 980px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
