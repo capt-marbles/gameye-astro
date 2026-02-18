@@ -42,7 +42,7 @@ The site includes a shared chatbot launcher (`/public/chatbot/chatbot-loader.js`
 
 Environment variables:
 
-- `PUBLIC_CHATBOT_ENABLED` (default: `true`)
+- `PUBLIC_CHATBOT_ENABLED` (default: `false`)
 - `PUBLIC_CHATBOT_API_ENDPOINT` (optional; when empty the loader uses a local fallback knowledge mode)
 - `PUBLIC_CHATBOT_MIN_CONFIDENCE` (default: `0.62`)
 
