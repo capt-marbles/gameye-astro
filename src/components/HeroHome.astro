@@ -7,10 +7,10 @@
       muted
       loop
       playsinline
-      preload="metadata"
+      preload="none"
+      data-video-src="https://gameye.com/wp-content/uploads/2026/02/My-Movie.mp4"
       poster="https://gameye.com/wp-content/uploads/2024/12/Screenshot-2024-12-07-225513.png"
     >
-      <source src="https://gameye.com/wp-content/uploads/2026/02/My-Movie.mp4" type="video/mp4" />
     </video>
   </div>
   <div class="hero-video-overlay" aria-hidden="true"></div>
@@ -132,21 +132,3 @@
     }
   }
 </style>
-
-<script>
-  const initHeroVideoBackground = () => {
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    document.querySelectorAll("[data-hero-video]").forEach((video) => {
-      if (!(video instanceof HTMLVideoElement)) return;
-      video.pause();
-      video.removeAttribute("autoplay");
-    });
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initHeroVideoBackground, { once: true });
-  } else {
-    initHeroVideoBackground();
-  }
-</script>

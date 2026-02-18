@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "profile:marketing": "node scripts/profile-marketing-build.mjs --json=reports/performance/marketing-build-profile.json --markdown=reports/performance/marketing-build-profile.md"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",

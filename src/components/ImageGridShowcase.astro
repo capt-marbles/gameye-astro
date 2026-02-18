@@ -209,36 +209,3 @@ const images = [
     }
   }
 </style>
-
-<script>
-  const hoverClasses = ["hover-tile-1", "hover-tile-2", "hover-tile-3", "hover-tile-4", "hover-tile-5"];
-
-  const clearHoverState = (grid) => {
-    grid.classList.remove(...hoverClasses);
-  };
-
-  const applyHoverState = (grid, tileIndex) => {
-    clearHoverState(grid);
-    grid.classList.add(`hover-tile-${tileIndex}`);
-  };
-
-  const initImageGridHover = () => {
-    document.querySelectorAll(".image-grid").forEach((grid) => {
-      if (!(grid instanceof HTMLElement)) return;
-
-      grid.querySelectorAll(".tile").forEach((tile, index) => {
-        if (!(tile instanceof HTMLElement)) return;
-
-        tile.addEventListener("mouseenter", () => applyHoverState(grid, index + 1));
-      });
-
-      grid.addEventListener("mouseleave", () => clearHoverState(grid));
-    });
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initImageGridHover, { once: true });
-  } else {
-    initImageGridHover();
-  }
-</script>
