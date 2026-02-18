@@ -35,6 +35,10 @@ const {
 	noindex = false,
 } = Astro.props;
 
+const chatbotEnabled = (import.meta.env.PUBLIC_CHATBOT_ENABLED ?? 'true').toLowerCase() === 'true';
+const chatbotApiEndpoint = import.meta.env.PUBLIC_CHATBOT_API_ENDPOINT ?? '';
+const chatbotMinConfidence = import.meta.env.PUBLIC_CHATBOT_MIN_CONFIDENCE ?? '0.62';
+
 const canonicalUrl = new URL(canonical, SITE_URL).toString();
 const siteOrigin = new URL(canonicalUrl).origin;
 const organizationId = `${siteOrigin}/#/schema/Organization`;
@@ -133,10 +137,31 @@ const jsonLd = {
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap"
 		/>
+		{chatbotEnabled && <link rel="stylesheet" href="/chatbot/chatbot.css" data-gy-chatbot-style="true" />}
 
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	</head>
 	<body>
 		<slot />
+		{
+			chatbotEnabled && (
+				<script
+					src="/chatbot/chatbot-loader.js"
+					is:inline
+					defer
+					data-gy-chatbot-loader="true"
+					data-enabled="true"
+					data-site="marketing"
+					data-title="Gameye AI Assistant"
+					data-api-endpoint={chatbotApiEndpoint}
+					data-min-confidence={chatbotMinConfidence}
+					data-primary-label="Open docs"
+					data-primary-url="https://docs.gameye.com/"
+					data-secondary-label="Contact support"
+					data-secondary-url="/contact-us/"
+					data-stylesheet="/chatbot/chatbot.css"
+				></script>
+			)
+		}
 	</body>
 </html>
