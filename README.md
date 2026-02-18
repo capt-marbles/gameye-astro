@@ -29,6 +29,9 @@ These reports track HTML/JS/CSS footprint and budget checks to support CWV harde
 - `npm run build`: production build to `dist/`
 - `npm run preview`: preview built site
 - `npm run profile:marketing`: generate build footprint report
+- `npm run build:redirects`: generate Cloudflare Pages `_redirects` from the parity CSV source map
+- `npm run check:redirects`: validate `_redirects` integrity against the source CSV
+- `npm run verify:redirects`: verify deployed redirect behavior and emit a CSV result report
 - `npm run check:parity`: validate `llms.txt`, sitemap outputs, and docs bridge parity
 - `npm run check:launch`: run launch QA checks for links, sitemap, bridge routes, and analytics events
 
@@ -42,7 +45,7 @@ The site includes a shared chatbot launcher (`/public/chatbot/chatbot-loader.js`
 
 Environment variables:
 
-- `PUBLIC_CHATBOT_ENABLED` (default: `true`)
+- `PUBLIC_CHATBOT_ENABLED` (default: `false`)
 - `PUBLIC_CHATBOT_API_ENDPOINT` (optional; when empty the loader uses a local fallback knowledge mode)
 - `PUBLIC_CHATBOT_MIN_CONFIDENCE` (default: `0.62`)
 
@@ -79,3 +82,29 @@ npm run check:launch
 - sitemap include/exclude coverage for launch-critical routes
 - noindex + canonical docs target behavior on docs bridge pages
 - pricing estimator and chatbot analytics event instrumentation
+
+## Cloudflare Pages Redirect Automation (GAM-26)
+
+Redirect source map:
+
+- `redirects/gameye-redirects-import-2026-02-18.csv`
+
+Generated artifact:
+
+- `public/_redirects` (copied to `dist/_redirects` on build)
+
+Workflow:
+
+```sh
+npm run build:redirects
+npm run check:redirects
+npm run build
+```
+
+Post-deploy verification (Preview/Production):
+
+```sh
+npm run verify:redirects -- --base-url=https://<your-cloudflare-pages-domain>
+```
+
+The verifier writes a CSV report under `reports/redirects/` with observed status/location for each mapped URL.
