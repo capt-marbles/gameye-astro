@@ -29,3 +29,17 @@ These reports track HTML/JS/CSS footprint and budget checks to support CWV harde
 - `npm run build`: production build to `dist/`
 - `npm run preview`: preview built site
 - `npm run profile:marketing`: generate build footprint report
+
+## AI Chatbot Integration (GAM-20)
+
+The site includes a shared chatbot launcher (`/public/chatbot/chatbot-loader.js`) with:
+
+- citation rendering for responses
+- confidence thresholding and fallback routing
+- analytics events via `window.dataLayer`
+
+Environment variables:
+
+- `PUBLIC_CHATBOT_ENABLED` (default: `true`)
+- `PUBLIC_CHATBOT_API_ENDPOINT` (optional; when empty the loader uses a local fallback knowledge mode)
+- `PUBLIC_CHATBOT_MIN_CONFIDENCE` (default: `0.62`)
