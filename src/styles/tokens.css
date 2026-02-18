@@ -1,0 +1,101 @@
+:root {
+  --gy-color-light-green: #3dffcf;
+  --gy-color-light-blue: #239ed7;
+  --gy-color-dark-blue: #026286;
+  --gy-color-alt-dark-blue: #044b66;
+  --gy-color-discord: #5865f2;
+  --gy-color-white: #ffffff;
+  --gy-color-off-white: #f4ffff;
+  --gy-color-orange: #ffd371;
+
+  --gy-color-bg: #ffffff;
+  --gy-color-bg-alt: #eeffff;
+  --gy-color-heading: var(--gy-color-dark-blue);
+  --gy-color-subtitle: var(--gy-color-alt-dark-blue);
+  --gy-color-body: var(--gy-color-dark-blue);
+  --gy-color-accent: var(--gy-color-dark-blue);
+  --gy-color-nav: var(--gy-color-light-blue);
+
+  --gy-gradient-brand-loop: linear-gradient(90deg, #3dffcf, #0097d4, #3dffcf, #0097d4);
+  --gy-gradient-cta-default: linear-gradient(95deg, #3dffcf 22.31%, #0097d4 121.75%);
+  --gy-gradient-case-studies: linear-gradient(124deg, #3dffcf 16.54%, #0097d4 112.18%);
+  --gy-gradient-discord-cta: linear-gradient(276deg, #23272a 19.25%, #5868f2 94.44%);
+
+  --gy-font-family-base: "Kanit", sans-serif;
+  --gy-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --gy-font-weight-body: 300;
+  --gy-font-weight-heading: 275;
+  --gy-font-weight-subtitle: 500;
+  --gy-font-weight-button: 400;
+  --gy-font-weight-emphasis: 700;
+
+  --gy-font-size-root: 18px;
+  --gy-font-size-h1: 3.4rem;
+  --gy-font-size-h2: 2.6rem;
+  --gy-font-size-h3: 1.6rem;
+  --gy-font-size-subtitle: 1.2rem;
+  --gy-font-size-button-large: 1.1rem;
+
+  --gy-space-0: 0;
+  --gy-space-025: 0.25rem;
+  --gy-space-05: 0.5rem;
+  --gy-space-06: 0.6rem;
+  --gy-space-075: 0.75rem;
+  --gy-space-08: 0.8rem;
+  --gy-space-1: 1rem;
+  --gy-space-12: 1.2rem;
+  --gy-space-15: 1.5rem;
+  --gy-space-2: 2rem;
+  --gy-space-25: 2.5rem;
+  --gy-space-3: 3rem;
+  --gy-space-4: 4rem;
+  --gy-space-5: 5rem;
+  --gy-space-6: 6rem;
+  --gy-space-8: 8rem;
+
+  --gy-radius-sm: 5px;
+  --gy-radius-md: 10px;
+  --gy-radius-lg: 15px;
+  --gy-radius-xl: 1rem;
+  --gy-radius-round: 50%;
+
+  --gy-shadow-cta-default: 4px 4px 30px 5px rgba(61, 255, 207, 0.5);
+  --gy-shadow-cta-discord: 4px 4px 30px 5px rgba(88, 101, 242, 0.5);
+
+  --gy-container-max: 1360px;
+  --gy-container-narrow-max: 1000px;
+
+  --gy-motion-fast: 200ms;
+  --gy-motion-medium: 300ms;
+  --gy-motion-slow: 400ms;
+  --gy-ease-standard: ease;
+  --gy-ease-emphasis: ease-in-out;
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --gy-font-size-root: 17px;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --gy-font-size-h1: 2.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --gy-font-size-root: 16px;
+  }
+}
+
+[data-theme="dark"] {
+  --gy-color-bg: linear-gradient(180deg, #023649 0%, #026185 100%);
+  --gy-color-bg-alt: #044b66;
+  --gy-color-heading: #ffffff;
+  --gy-color-subtitle: #3dffcf;
+  --gy-color-body: #ffffff;
+  --gy-color-accent: #3dffcf;
+  --gy-color-nav: #ffffff;
+}

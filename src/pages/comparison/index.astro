@@ -1,0 +1,121 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Gameye Comparison: Orchestration vs alternatives"
+  description="Compare Gameye orchestration capabilities against self-managed and managed alternatives for multiplayer infrastructure."
+  canonical="https://gameye.com/comparison/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg"
+  ogImageAlt="Gameye comparison overview"
+  schemaType="CollectionPage"
+  schemaName="Gameye Comparison"
+>
+  <section class="section page-hero">
+    <div class="container">
+      <p class="subtitle">Comparison</p>
+      <h1>Evaluate orchestration tradeoffs with an operator-first lens.</h1>
+      <p class="lead">
+        Use this MVP page as the foundation for the full comparison cluster rebuild in the next delivery stage.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>Gameye</th>
+            <th>Self-managed stack</th>
+            <th>Single-provider managed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Provider-agnostic deployment</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Limited</td>
+          </tr>
+          <tr>
+            <td>Session orchestration API</td>
+            <td>Native</td>
+            <td>Custom build</td>
+            <td>Varies</td>
+          </tr>
+          <tr>
+            <td>Cost-aware routing controls</td>
+            <td>Built-in</td>
+            <td>Custom logic</td>
+            <td>Partial</td>
+          </tr>
+          <tr>
+            <td>Operational observability workflows</td>
+            <td>Built-in</td>
+            <td>Assembled toolchain</td>
+            <td>Provider-specific</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-box">
+      <h2>Need a workload-specific comparison?</h2>
+      <p>Talk through your current stack and we can map migration effort, risk profile, and operating model fit.</p>
+      <a class="button primary" href="/contact-us/">Request comparison workshop</a>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .page-hero .lead {
+    margin-top: 1rem;
+    max-width: 66ch;
+    font-size: 1.15rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 52rem;
+    background: var(--gy-color-white);
+  }
+
+  .compare-table th,
+  .compare-table td {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 20%, #fff);
+    padding: 0.85rem;
+    text-align: left;
+  }
+
+  .compare-table thead th {
+    background: var(--gy-color-bg-alt);
+    font-weight: 500;
+  }
+
+  .cta-box {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-bg-alt);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .cta-box p {
+    margin: 0.9rem auto 0;
+    max-width: 60ch;
+  }
+
+  .cta-box .button {
+    margin-top: 1.1rem;
+  }
+</style>

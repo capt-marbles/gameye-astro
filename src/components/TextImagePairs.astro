@@ -1,0 +1,110 @@
+---
+import SectionParticles from './SectionParticles.astro';
+
+const blocks = [
+  {
+    title: 'Architecture visibility for live operations',
+    description:
+      'Track orchestration flow across regions, providers, and server groups with a clear operational view for support and engineering teams.',
+    href: '/how-it-works/',
+    cta: 'View platform flow',
+    image: 'https://gameye.com/wp-content/uploads/2026/02/gameye_architecture_white.png',
+    alt: 'Gameye architecture overview diagram',
+  },
+  {
+    title: 'Tooling and API workflows for game teams',
+    description:
+      'Ship updates faster with workflows that align dashboard actions, API orchestration, and deployment feedback in one platform path.',
+    href: '/docs/',
+    cta: 'Read developer docs',
+    image: 'https://gameye.com/wp-content/uploads/2024/12/tools.svg',
+    alt: 'Developer tooling illustration',
+  },
+];
+---
+
+<section class="section text-image-pairs">
+  <SectionParticles count={7} />
+  <div class="container stack">
+    {blocks.map((block, index) => (
+      <article class={`pair ${index % 2 === 1 ? 'reverse' : ''}`}>
+        <div class="text">
+          <p class="subtitle">Reusable Section</p>
+          <h2>{block.title}</h2>
+          <p>{block.description}</p>
+          <a class="button secondary" href={block.href}>{block.cta}</a>
+        </div>
+        <figure class="visual">
+          <img src={block.image} alt={block.alt} loading="lazy" decoding="async" />
+        </figure>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .text-image-pairs {
+    position: relative;
+    overflow: hidden;
+    background: var(--gy-color-bg);
+  }
+
+  .text-image-pairs .stack {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 3rem;
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .pair.reverse .text {
+    order: 2;
+  }
+
+  .pair.reverse .visual {
+    order: 1;
+  }
+
+  .text p {
+    margin-top: 0.9rem;
+    max-width: 58ch;
+  }
+
+  .text .button {
+    margin-top: 1.1rem;
+  }
+
+  .visual {
+    margin: 0;
+    padding: 1rem;
+    border-radius: var(--gy-radius-md);
+    background: var(--gy-color-bg-alt);
+  }
+
+  .visual img {
+    width: 100%;
+    height: auto;
+    max-height: 22rem;
+    object-fit: contain;
+    display: block;
+  }
+
+  @media (max-width: 950px) {
+    .pair,
+    .pair.reverse {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .pair.reverse .text,
+    .pair.reverse .visual {
+      order: initial;
+    }
+  }
+</style>

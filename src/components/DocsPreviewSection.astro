@@ -1,0 +1,121 @@
+---
+import SectionParticles from './SectionParticles.astro';
+
+const docsBlocks = [
+  {
+    title: 'Quickstart',
+    description: 'Provision your first server fleet, region strategy, and deployment rules in minutes.',
+    href: '/docs/quickstart/',
+  },
+  {
+    title: 'API Reference',
+    description: 'Session orchestration, fleet scaling, placement rules, and observability endpoints.',
+    href: '/docs/api/',
+  },
+  {
+    title: 'Integrations',
+    description: 'Engine, CI/CD, and telemetry integrations for shipping production updates safely.',
+    href: '/docs/integrations/',
+  },
+  {
+    title: 'Operations',
+    description: 'Runbooks for incident handling, failover patterns, and capacity planning playbooks.',
+    href: '/docs/operations/',
+  },
+];
+---
+
+<section class="section docs-preview">
+  <SectionParticles count={6} />
+  <div class="container">
+    <div class="heading">
+      <p class="subtitle">Reusable Section</p>
+      <h2>Documentation preview block</h2>
+      <p>Designed to bridge marketing and docs so technical users can self-serve quickly.</p>
+    </div>
+
+    <div class="grid">
+      {docsBlocks.map((item) => (
+        <article class="card">
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+          <a href={item.href}>Open section</a>
+        </article>
+      ))}
+    </div>
+
+    <p class="actions">
+      <a class="button primary" href="https://docs.gameye.com/">Read full documentation</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .docs-preview {
+    position: relative;
+    overflow: hidden;
+    background: var(--gy-color-bg);
+  }
+
+  .docs-preview .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  .heading p:last-child {
+    margin: 0.8rem auto 0;
+    max-width: 58ch;
+  }
+
+  .grid {
+    margin-top: 1.3rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+
+  .card {
+    background: var(--gy-color-white);
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-lg);
+    padding: 1rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .card a {
+    text-decoration: none;
+    color: var(--gy-color-alt-dark-blue);
+    font-weight: 500;
+  }
+
+  .card a:hover {
+    color: var(--gy-color-dark-blue);
+  }
+
+  .actions {
+    margin-top: 1.2rem;
+    text-align: center;
+  }
+
+  @media (max-width: 1050px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 650px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

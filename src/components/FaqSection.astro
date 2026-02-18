@@ -1,0 +1,127 @@
+---
+import SectionParticles from './SectionParticles.astro';
+
+const faqs = [
+  {
+    question: 'How quickly can teams migrate from a custom server stack?',
+    answer:
+      'Most teams stage migration by game mode and region first, then expand with orchestration templates once stability metrics are validated.',
+  },
+  {
+    question: 'Can we combine cloud and bare metal providers in one deployment model?',
+    answer:
+      'Yes. Policies can route workloads by region, latency target, or cost profile so each session lands on an appropriate provider pool.',
+  },
+  {
+    question: 'Does Gameye support burst events and seasonal traffic spikes?',
+    answer:
+      'The platform is built for elastic scaling with capacity guardrails and monitoring hooks to absorb peak concurrency while maintaining control.',
+  },
+  {
+    question: 'How do teams track reliability and performance after rollout?',
+    answer:
+      'Operations dashboards and telemetry integrations provide visibility into session health, region behavior, and incident response workflows.',
+  },
+];
+---
+
+<section class="section faq-section">
+  <SectionParticles count={5} />
+  <div class="container">
+    <div class="heading">
+      <p class="subtitle">Reusable Section</p>
+      <h2>FAQ accordion block</h2>
+    </div>
+
+    <div class="faq-list">
+      {faqs.map((item) => (
+        <details>
+          <summary>{item.question}</summary>
+          <div class="content">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--gy-color-bg);
+    padding: 1.2rem 0;
+  }
+
+  .faq-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  .faq-list {
+    margin: 0 auto;
+    max-width: 1100px;
+  }
+
+  .faq-list details {
+    background: var(--gy-color-bg-alt);
+    border: none;
+    border-radius: var(--gy-radius-xl);
+    overflow: hidden;
+    margin: 1.5rem auto;
+  }
+
+  .faq-list summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 2rem;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: var(--gy-color-dark-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .faq-list summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-list summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--gy-color-alt-dark-blue);
+    flex: 0 0 auto;
+  }
+
+  .faq-list details[open] summary::after {
+    content: '−';
+  }
+
+  .faq-list .content {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .faq-list .content p {
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  @media (max-width: 800px) {
+    .faq-list summary {
+      padding: 1.4rem;
+      font-size: 1.25rem;
+    }
+
+    .faq-list .content {
+      padding: 0 1.4rem 1.4rem;
+    }
+  }
+</style>

@@ -1,0 +1,176 @@
+---
+import SectionParticles from './SectionParticles.astro';
+
+const logos = [
+  {
+    name: 'Doborog',
+    src: 'https://gameye.com/wp-content/uploads/2023/11/Doborog-logo-1.png',
+  },
+  {
+    name: 'Torn Banner',
+    src: 'https://gameye.com/wp-content/uploads/2023/11/Torn-banner-1.png',
+  },
+  {
+    name: 'Remedy',
+    src: 'https://gameye.com/wp-content/uploads/2024/01/remedy.png',
+  },
+  {
+    name: 'Tripwire',
+    src: 'https://gameye.com/wp-content/uploads/2023/11/Tripwire-logo-1.png',
+  },
+  {
+    name: 'Moon Monster',
+    src: 'https://gameye.com/wp-content/uploads/2024/01/moonmonster.png',
+  },
+  {
+    name: 'Little Orbit',
+    src: 'https://gameye.com/wp-content/uploads/2024/01/little-orbit-2-1.png',
+  },
+  {
+    name: 'Secret 6',
+    src: 'https://gameye.com/wp-content/uploads/2023/11/Secret-6-1.png',
+  },
+  {
+    name: 'Longtail',
+    src: 'https://gameye.com/wp-content/uploads/2024/01/longtail-logo.png',
+  },
+];
+
+const rowOne = logos;
+const rowTwo = [...logos].reverse();
+const rowOneLoop = [...rowOne, ...rowOne];
+const rowTwoLoop = [...rowTwo, ...rowTwo];
+---
+
+<section class="section logos">
+  <SectionParticles count={8} />
+  <div class="container">
+    <p class="subtitle">Reusable Section</p>
+    <h2>Partner logo carousel</h2>
+    <div class="carousel-stack" aria-label="Partner and integration logos">
+      <div class="carousel-row">
+        <div class="track track-top">
+          {rowOneLoop.map((logo, index) => (
+            <figure class="logo-card" aria-hidden={index >= rowOne.length ? 'true' : undefined}>
+              <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      </div>
+      <div class="carousel-row">
+        <div class="track track-bottom">
+          {rowTwoLoop.map((logo, index) => (
+            <figure class="logo-card" aria-hidden={index >= rowTwo.length ? 'true' : undefined}>
+              <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .logos {
+    position: relative;
+    overflow: hidden;
+    background: var(--gy-color-bg);
+  }
+
+  .logos .container {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #fff 10%, #fff 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #fff 10%, #fff 90%, transparent);
+  }
+
+  .carousel-stack {
+    margin-top: 2rem;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .carousel-row {
+    overflow: hidden;
+  }
+
+  .track {
+    width: max-content;
+    display: flex;
+    gap: 0;
+  }
+
+  .track-top {
+    animation: gy-logo-scroll-left-to-right 34s linear infinite;
+  }
+
+  .track-bottom {
+    animation: gy-logo-scroll-right-to-left 34s linear infinite;
+  }
+
+  .carousel-stack:hover .track {
+    animation-play-state: paused;
+  }
+
+  .logo-card {
+    margin: 0;
+    width: auto;
+    height: auto;
+    background: transparent;
+    border: none;
+    display: grid;
+    place-items: center;
+    padding: 1rem 1.4rem;
+  }
+
+  .logo-card img {
+    width: auto;
+    height: 3rem;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+
+  @keyframes gy-logo-scroll-left-to-right {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes gy-logo-scroll-right-to-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .logo-card {
+      padding: 0.8rem 1rem;
+    }
+
+    .logo-card img {
+      height: 2.3rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-row {
+      overflow-x: auto;
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    .track {
+      animation: none;
+      width: auto;
+      justify-content: flex-start;
+    }
+  }
+</style>

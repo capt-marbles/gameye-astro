@@ -1,0 +1,222 @@
+---
+const requestSnippet = `curl -X POST https://api.gameye.com/sessions \\
+-H "Content-Type: application/json" \\
+-H "Authorization: Bearer YOUR_API_KEY" \\
+-d '{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "location": "eu-west-1",
+  "image": "my-game-server",
+  "args": "--tickrate 128 +sv_lan 0",
+  "labels": {
+    "game_mode": "competitive"
+  },
+  "version": "latest"
+}'`;
+
+const responseSnippet = `// Example Response
+{
+  "id": "match-123",
+  "host": "203.0.113.10",
+  "port": 7777
+}`;
+---
+
+<section class="gameye-code-section" data-gameye-code-section>
+  <div class="container code-grid">
+    <div class="code-copy">
+      <p class="gameye-eyebrow">One API call. One session.</p>
+      <h3>Orchestrate matches with a single API call</h3>
+      <p>
+        Allocate sessions, scale by region, and inspect fleet health with a straightforward HTTP API. No
+        orchestration layer to build. No DevOps team to grow.
+      </p>
+    </div>
+
+    <div class="gameye-code-snippet">
+      <pre><code class="gameye-code-snippet-animated">{requestSnippet}</code></pre>
+      <pre class="response"><code class="gameye-response-green">{responseSnippet}</code></pre>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gameye-code-section {
+    padding: 4.8rem 1.5rem;
+    background: linear-gradient(135deg, #e0f7ff 0%, #e6fff7 45%, #f5f9ff 100%);
+    color: #020617;
+  }
+
+  .gameye-code-section .code-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .gameye-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin: 0 0 0.75rem;
+    color: #0f172a;
+    font-weight: 500;
+  }
+
+  .code-copy h3 {
+    font-size: 1.8rem;
+    line-height: 1.25;
+    margin: 0 0 1rem;
+    color: #020617;
+    font-weight: 500;
+  }
+
+  .code-copy p {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    max-width: 36rem;
+    margin: 0;
+    color: #1e293b;
+  }
+
+  .gameye-code-snippet {
+    background: #020617;
+    border-radius: 14px;
+    padding: 1.6rem 1.8rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.45);
+    overflow-x: auto;
+    font-family: var(--gy-font-family-mono);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    border: 1px solid rgba(15, 23, 42, 0.35);
+    position: relative;
+    min-height: 380px;
+    box-sizing: border-box;
+  }
+
+  .gameye-code-snippet pre {
+    margin: 0;
+  }
+
+  .gameye-code-snippet .response {
+    margin-top: 20px;
+  }
+
+  .gameye-code-snippet code {
+    background: transparent !important;
+    padding: 0 !important;
+    color: #e5ecff;
+    white-space: pre;
+    display: block;
+  }
+
+  .gameye-response-green {
+    color: #4ade80 !important;
+  }
+
+  .gameye-code-snippet::before {
+    content: "cURL";
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    opacity: 0.7;
+    margin-bottom: 0.9rem;
+    color: #9ca3af;
+  }
+
+  .gameye-code-snippet::after {
+    content: "";
+    position: absolute;
+    top: 0.9rem;
+    right: 1.2rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    box-shadow:
+      -14px 0 0 #22c55e,
+      0 0 0 #eab308,
+      14px 0 0 #f43f5e;
+  }
+
+  .gameye-code-snippet.typing .gameye-code-snippet-animated::after {
+    content: "▌";
+    display: inline-block;
+    margin-left: 2px;
+    animation: gameye-caret-blink 0.9s steps(1) infinite;
+  }
+
+  @keyframes gameye-caret-blink {
+    0%, 50% {
+      opacity: 1;
+    }
+    50.01%, 100% {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .gameye-code-section .code-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .gameye-code-snippet {
+      min-height: 0;
+    }
+  }
+</style>
+
+<script>
+  const initGameyeCodeTypewriter = () => {
+    const sections = document.querySelectorAll("[data-gameye-code-section]");
+    if (sections.length === 0) return;
+
+    const prefersReducedMotion = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    sections.forEach((section) => {
+      if (!(section instanceof HTMLElement)) return;
+      if (section.dataset.bound === "true") return;
+      section.dataset.bound = "true";
+
+      const snippet = section.querySelector(".gameye-code-snippet-animated");
+      const card = section.querySelector(".gameye-code-snippet");
+      if (!(snippet instanceof HTMLElement) || !(card instanceof HTMLElement)) return;
+
+      const fullText = snippet.textContent || "";
+      snippet.textContent = "";
+      card.classList.add("typing");
+
+      let index = 0;
+      const speed = 10;
+
+      const typeNext = () => {
+        index += 1;
+        snippet.textContent = fullText.slice(0, index);
+
+        if (index < fullText.length) {
+          window.requestAnimationFrame(() => {
+            window.setTimeout(typeNext, speed);
+          });
+        } else {
+          window.setTimeout(() => {
+            card.classList.remove("typing");
+          }, 400);
+        }
+      };
+
+      typeNext();
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGameyeCodeTypewriter, { once: true });
+  } else {
+    initGameyeCodeTypewriter();
+  }
+</script>

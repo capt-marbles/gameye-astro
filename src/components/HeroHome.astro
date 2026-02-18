@@ -1,0 +1,152 @@
+<section class="hero">
+  <div class="hero-video-wrap" aria-hidden="true">
+    <video
+      class="hero-video-bg"
+      data-hero-video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="https://gameye.com/wp-content/uploads/2024/12/Screenshot-2024-12-07-225513.png"
+    >
+      <source src="https://gameye.com/wp-content/uploads/2026/02/My-Movie.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero-video-overlay" aria-hidden="true"></div>
+
+  <div class="container hero-content">
+    <div class="hero-text">
+      <p class="subtitle">Global Game Server Orchestration</p>
+      <h1>Host demanding multiplayer sessions with predictable performance.</h1>
+      <p class="lead">
+        This Astro scaffold preserves Gameye's current visual language while setting up reusable sections for
+        marketing, comparisons, docs cross-links, and pricing conversion flows.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="/contact-us/">Get access</a>
+        <a class="button secondary" href="/comparison/">See comparisons</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 8.5rem 0 5.5rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--gy-color-bg);
+  }
+
+  .hero-video-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0.92;
+    filter: brightness(1.6) saturate(0.45);
+  }
+
+  .hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.28) 100%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .hero-text {
+    max-width: 68rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-text .subtitle {
+    font-weight: 600;
+  }
+
+  .hero h1 {
+    margin-top: 0;
+    line-height: 1.05;
+    font-size: clamp(2.7rem, 6.2vw, 4.4rem);
+    font-weight: 700;
+  }
+
+  .lead {
+    margin: 1.15rem auto 0;
+    max-width: 66ch;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    margin-top: 1.8rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding: 7.4rem 0 4.5rem;
+      min-height: 88vh;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-video-wrap,
+    .hero-video-overlay {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video-wrap,
+    .hero-video-overlay {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const initHeroVideoBackground = () => {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    document.querySelectorAll("[data-hero-video]").forEach((video) => {
+      if (!(video instanceof HTMLVideoElement)) return;
+      video.pause();
+      video.removeAttribute("autoplay");
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHeroVideoBackground, { once: true });
+  } else {
+    initHeroVideoBackground();
+  }
+</script>

@@ -1,0 +1,74 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+import FaqSection from '../../components/FaqSection.astro';
+
+const faqStructuredData = {
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How quickly can teams migrate from a custom server stack?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Most teams stage migration by game mode and region first, then expand with orchestration templates once stability metrics are validated.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can we combine cloud and bare metal providers in one deployment model?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Policies can route workloads by region, latency target, or cost profile so each session lands on an appropriate provider pool.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does Gameye support burst events and seasonal traffic spikes?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The platform is built for elastic scaling with capacity guardrails and monitoring hooks to absorb peak concurrency while maintaining control.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do teams track reliability and performance after rollout?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Operations dashboards and telemetry integrations provide visibility into session health, region behavior, and incident response workflows.',
+      },
+    },
+  ],
+};
+---
+
+<MarketingPageLayout
+  title="Gameye FAQ: Multiplayer orchestration questions"
+  description="Frequently asked questions about Gameye orchestration, provider strategy, migration, and operations."
+  canonical="https://gameye.com/faq/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg"
+  ogImageAlt="Gameye FAQ"
+  schemaType="FAQPage"
+  schemaName="Gameye FAQ"
+  structuredData={faqStructuredData}
+>
+  <section class="section page-hero">
+    <div class="container">
+      <p class="subtitle">FAQ</p>
+      <h1>Answers to common platform and migration questions.</h1>
+      <p class="lead">
+        Use this FAQ as a quick operational reference before moving into detailed implementation docs.
+      </p>
+    </div>
+  </section>
+
+  <FaqSection />
+</MarketingPageLayout>
+
+<style>
+  .page-hero .lead {
+    margin-top: 1rem;
+    max-width: 66ch;
+    font-size: 1.15rem;
+  }
+</style>

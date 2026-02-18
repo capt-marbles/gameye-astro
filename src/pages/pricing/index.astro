@@ -1,0 +1,190 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Gameye Pricing: Estimate multiplayer orchestration cost"
+  description="Use the Gameye pricing MVP estimator to model monthly orchestration cost by region, workload shape, and server profile."
+  canonical="https://gameye.com/pricing/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2024/12/Screenshot-2024-12-07-225513.png"
+  ogImageAlt="Gameye pricing estimator preview"
+  schemaType="WebPage"
+  schemaName="Gameye Pricing"
+>
+  <section class="section page-hero">
+    <div class="container">
+      <p class="subtitle">Pricing</p>
+      <h1>Estimate monthly orchestration cost in minutes.</h1>
+      <p class="lead">
+        This MVP estimator is intentionally simple and designed for discovery conversations. A full production
+        calculator with scenario exports will follow in the dedicated pricing phase.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container estimator" data-estimator>
+      <div class="controls">
+        <label>
+          Region mix
+          <select data-field="region">
+            <option value="1">Balanced global mix</option>
+            <option value="0.92">NA-heavy</option>
+            <option value="0.97">EU-heavy</option>
+            <option value="1.08">APAC-heavy</option>
+          </select>
+        </label>
+
+        <label>
+          Concurrent sessions
+          <input data-field="sessions" type="number" min="1" value="120" />
+        </label>
+
+        <label>
+          Average hours per day
+          <input data-field="hours" type="number" min="1" max="24" value="8" />
+        </label>
+
+        <label>
+          Server profile
+          <select data-field="profile">
+            <option value="0.14">Standard CPU</option>
+            <option value="0.18">High-frequency CPU</option>
+            <option value="0.22">Memory optimized</option>
+          </select>
+        </label>
+      </div>
+
+      <aside class="result">
+        <p class="kicker">Estimated monthly infrastructure</p>
+        <p class="price" data-price>$0</p>
+        <p class="note">Directional estimate only. Contact us for exact workload pricing.</p>
+        <a class="button primary" href="/contact-us/">Request pricing review</a>
+      </aside>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .page-hero .lead {
+    margin-top: 1rem;
+    max-width: 66ch;
+    font-size: 1.15rem;
+  }
+
+  .estimator {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1rem;
+  }
+
+  .controls,
+  .result {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 14%, #fff);
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-white);
+    padding: 1.2rem;
+  }
+
+  .controls {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.35rem;
+    font-weight: 500;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  input,
+  select {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 22%, #fff);
+    border-radius: var(--gy-radius-sm);
+    padding: 0.55rem 0.65rem;
+    font: inherit;
+    color: var(--gy-color-dark-blue);
+    background: #fff;
+  }
+
+  .kicker {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gy-color-alt-dark-blue);
+    font-weight: 500;
+  }
+
+  .price {
+    margin-top: 0.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--gy-color-dark-blue);
+  }
+
+  .note {
+    margin-top: 0.7rem;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  .result .button {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 920px) {
+    .estimator {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const initEstimator = () => {
+    document.querySelectorAll("[data-estimator]").forEach((root) => {
+      if (!(root instanceof HTMLElement)) return;
+      if (root.dataset.bound === "true") return;
+      root.dataset.bound = "true";
+
+      const region = root.querySelector('[data-field="region"]');
+      const sessions = root.querySelector('[data-field="sessions"]');
+      const hours = root.querySelector('[data-field="hours"]');
+      const profile = root.querySelector('[data-field="profile"]');
+      const priceEl = root.querySelector("[data-price]");
+
+      if (!(region instanceof HTMLSelectElement)) return;
+      if (!(sessions instanceof HTMLInputElement)) return;
+      if (!(hours instanceof HTMLInputElement)) return;
+      if (!(profile instanceof HTMLSelectElement)) return;
+      if (!(priceEl instanceof HTMLElement)) return;
+
+      const calc = () => {
+        const regionFactor = Number(region.value || 1);
+        const sessionCount = Math.max(1, Number(sessions.value || 0));
+        const dailyHours = Math.min(24, Math.max(1, Number(hours.value || 0)));
+        const profileRate = Number(profile.value || 0);
+
+        const monthly = sessionCount * dailyHours * 30 * profileRate * regionFactor;
+        priceEl.textContent = monthly.toLocaleString(undefined, {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 0
+        });
+      };
+
+      [region, sessions, hours, profile].forEach((field) => {
+        field.addEventListener("input", calc);
+        field.addEventListener("change", calc);
+      });
+
+      calc();
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initEstimator, { once: true });
+  } else {
+    initEstimator();
+  }
+</script>

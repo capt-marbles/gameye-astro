@@ -1,0 +1,44 @@
+---
+import MarketingPageLayout from '../../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Gameye Operations Docs Bridge"
+  description="Operations bridge page linking to runbooks, scaling practices, and reliability guidance in docs."
+  canonical="https://gameye.com/docs/operations/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2024/12/servers.svg"
+  ogImageAlt="Gameye operations docs bridge"
+  schemaType="WebPage"
+  schemaName="Gameye Operations Docs Bridge"
+  noindex
+>
+  <section class="section topic-page">
+    <div class="container">
+      <p class="subtitle">Docs · Operations</p>
+      <h1>Operations and runbooks</h1>
+      <p>
+        Reliability and scaling runbooks are maintained in the full docs environment. Continue there for the latest
+        operations guidance.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://docs.gameye.com/">Open docs.gameye.com</a>
+        <a class="button secondary" href="/docs/">Back to docs hub</a>
+      </div>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .topic-page p {
+    margin-top: 1rem;
+    max-width: 64ch;
+  }
+
+  .actions {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+</style>

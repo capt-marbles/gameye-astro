@@ -1,0 +1,102 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <section>
+      <h3>Gameye Infrastructure</h3>
+      <p>
+        Dedicated orchestration for demanding multiplayer games, with hybrid cloud and bare metal coverage.
+      </p>
+    </section>
+
+    <nav aria-label="Footer">
+      <h3>Explore</h3>
+      <ul>
+        <li><a href="/how-it-works/">How it works</a></li>
+        <li><a href="/comparison/">Comparisons</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/docs/">Documentation</a></li>
+      </ul>
+    </nav>
+
+    <section class="actions">
+      <a class="button primary" href="/contact-us/">Talk to sales</a>
+      <a class="button secondary" href="/faq/">Read FAQ</a>
+    </section>
+  </div>
+
+  <div class="container footer-bottom">
+    <small>© {new Date().getFullYear()} Gameye Infrastructure</small>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 4.8rem;
+    padding: 3.5rem 0 2rem;
+    background: var(--gy-color-alt-dark-blue);
+    color: var(--gy-color-white);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  h3 {
+    margin: 0 0 0.8rem;
+    color: var(--gy-color-white);
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  p {
+    color: var(--gy-color-off-white);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  a {
+    color: var(--gy-color-off-white);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--gy-color-light-green);
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .actions .button.secondary {
+    border-color: var(--gy-color-light-green);
+    color: var(--gy-color-light-green);
+  }
+
+  .actions .button.secondary:hover {
+    background: var(--gy-color-light-green);
+    color: var(--gy-color-dark-blue);
+  }
+
+  .footer-bottom {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--gy-color-light-green) 25%, transparent);
+    color: color-mix(in srgb, var(--gy-color-off-white) 80%, transparent);
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

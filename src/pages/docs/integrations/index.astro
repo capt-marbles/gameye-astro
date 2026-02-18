@@ -1,0 +1,44 @@
+---
+import MarketingPageLayout from '../../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Gameye Integrations Docs Bridge"
+  description="Integrations bridge page for engine, pipeline, and telemetry documentation paths."
+  canonical="https://gameye.com/docs/integrations/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2024/12/tools.svg"
+  ogImageAlt="Gameye integrations docs bridge"
+  schemaType="WebPage"
+  schemaName="Gameye Integrations Docs Bridge"
+  noindex
+>
+  <section class="section topic-page">
+    <div class="container">
+      <p class="subtitle">Docs · Integrations</p>
+      <h1>Integration guides</h1>
+      <p>
+        Integration content is maintained in the dedicated docs stack. Continue there for the current engine, CI/CD,
+        and observability setup guides.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://docs.gameye.com/">Open docs.gameye.com</a>
+        <a class="button secondary" href="/docs/">Back to docs hub</a>
+      </div>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .topic-page p {
+    margin-top: 1rem;
+    max-width: 64ch;
+  }
+
+  .actions {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Gameye Platform: Provider-agnostic game server orchestration"
+  description="Explore the Gameye platform architecture for region-aware orchestration, observability, and cost-aware multiplayer scaling."
+  canonical="https://gameye.com/platform/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2026/02/gameye_architecture_white.png"
+  ogImageAlt="Gameye platform architecture diagram"
+  schemaType="WebPage"
+  schemaName="Gameye Platform"
+>
+  <section class="section page-hero">
+    <div class="container">
+      <p class="subtitle">Platform</p>
+      <h1>Provider-agnostic orchestration built for multiplayer at scale.</h1>
+      <p class="lead">
+        Deploy and operate game sessions across cloud and bare metal providers through one control layer, one API,
+        and one operational workflow.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="/contact-us/">Talk to sales</a>
+        <a class="button secondary" href="/how-it-works/">See how it works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cards">
+      <article class="card">
+        <h3>Global placement control</h3>
+        <p>Route sessions to optimal regions with policy-driven provider selection and latency-aware orchestration.</p>
+      </article>
+      <article class="card">
+        <h3>Operational observability</h3>
+        <p>Monitor fleet state, labels, and lifecycle behavior with real-time operational context for live teams.</p>
+      </article>
+      <article class="card">
+        <h3>Cost-aware scaling</h3>
+        <p>Scale capacity by demand while balancing provider mix and infrastructure cost in one deployment model.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <p class="subtitle">Architecture</p>
+        <h2>Unified control plane, flexible execution layer.</h2>
+        <p>
+          Gameye keeps orchestration concerns separate from your game binaries so teams can iterate on gameplay while
+          the platform handles infrastructure placement, scaling, and health workflows.
+        </p>
+      </div>
+      <img
+        src="https://gameye.com/wp-content/uploads/2026/02/gameye_architecture_white.png"
+        alt="Gameye platform architecture"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/comparison/">Compare with alternatives</a>
+      <a href="/pricing/">Estimate infrastructure cost</a>
+      <a href="/docs/">Read technical docs</a>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .page-hero .lead {
+    margin-top: 1rem;
+    max-width: 66ch;
+    font-size: 1.15rem;
+  }
+
+  .actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    background: var(--gy-color-white);
+    border-radius: var(--gy-radius-lg);
+    padding: 1.2rem;
+  }
+
+  .card h3 {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .split p {
+    margin-top: 0.9rem;
+  }
+
+  .split img {
+    width: 100%;
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-bg-alt);
+    padding: 1rem;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  @media (max-width: 960px) {
+    .cards,
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

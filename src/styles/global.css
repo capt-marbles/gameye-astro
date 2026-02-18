@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--gy-font-size-root);
+}
+
+body {
+  font-family: var(--gy-font-family-base);
+  font-weight: var(--gy-font-weight-body);
+  color: var(--gy-color-body);
+  background: var(--gy-color-bg);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.1;
+  margin: 0;
+  color: var(--gy-color-heading);
+  font-weight: var(--gy-font-weight-heading);
+}
+
+h1 {
+  font-size: var(--gy-font-size-h1);
+}
+
+h2 {
+  font-size: var(--gy-font-size-h2);
+}
+
+h3 {
+  font-size: var(--gy-font-size-h3);
+  font-weight: 300;
+}
+
+p {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--gy-container-max);
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.container.narrow {
+  max-width: var(--gy-container-narrow-max);
+}
+
+.subtitle {
+  color: var(--gy-color-subtitle);
+  font-size: var(--gy-font-size-subtitle);
+  font-weight: var(--gy-font-weight-subtitle);
+  margin-bottom: var(--gy-space-05);
+}
+
+.button {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: var(--gy-radius-sm);
+  text-decoration: none;
+  font-weight: var(--gy-font-weight-button);
+  text-align: center;
+  padding: 0.6rem 1.5rem;
+  transition: all var(--gy-motion-fast) var(--gy-ease-standard);
+}
+
+.button.primary {
+  background: var(--gy-color-light-green);
+  color: var(--gy-color-dark-blue);
+  border-color: var(--gy-color-light-green);
+}
+
+.button.primary:hover {
+  background: var(--gy-color-light-blue);
+  color: var(--gy-color-white);
+  border-color: var(--gy-color-light-blue);
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--gy-color-alt-dark-blue);
+  border-color: var(--gy-color-alt-dark-blue);
+}
+
+.button.secondary:hover {
+  background: var(--gy-color-alt-dark-blue);
+  color: var(--gy-color-white);
+}
+
+.section {
+  padding: calc(var(--gy-space-3) * 1.2) 0;
+}
+
+.section.alt {
+  background: var(--gy-color-bg-alt);
+}
+
+@media (max-width: 1000px) {
+  .container,
+  .container.narrow {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .section {
+    padding: 3rem 0;
+  }
+}

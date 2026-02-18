@@ -1,0 +1,44 @@
+---
+import MarketingPageLayout from '../../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Gameye API Reference Bridge"
+  description="API reference bridge page linking into the full Gameye developer documentation."
+  canonical="https://gameye.com/docs/api/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2024/12/tools.svg"
+  ogImageAlt="Gameye API docs bridge"
+  schemaType="WebPage"
+  schemaName="Gameye API Docs Bridge"
+  noindex
+>
+  <section class="section topic-page">
+    <div class="container">
+      <p class="subtitle">Docs · API</p>
+      <h1>API reference access</h1>
+      <p>
+        Endpoint and schema coverage is maintained in the full docs site. Use the button below to continue to the
+        latest API reference.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://docs.gameye.com/">Open docs.gameye.com</a>
+        <a class="button secondary" href="/docs/">Back to docs hub</a>
+      </div>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .topic-page p {
+    margin-top: 1rem;
+    max-width: 64ch;
+  }
+
+  .actions {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+</style>

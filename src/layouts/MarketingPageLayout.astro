@@ -1,0 +1,57 @@
+---
+import Layout from './Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+type JsonLdNode = Record<string, unknown>;
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  headerOverlay?: boolean;
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: string;
+  twitterCard?: string;
+  schemaType?: string;
+  schemaName?: string;
+  structuredData?: JsonLdNode | JsonLdNode[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  headerOverlay = false,
+  ogImage,
+  ogImageAlt,
+  ogType,
+  twitterCard,
+  schemaType,
+  schemaName,
+  structuredData,
+  noindex
+} = Astro.props;
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+  ogType={ogType}
+  twitterCard={twitterCard}
+  schemaType={schemaType}
+  schemaName={schemaName}
+  structuredData={structuredData}
+  noindex={noindex}
+>
+  <SiteHeader overlay={headerOverlay} />
+  <main>
+    <slot />
+  </main>
+  <SiteFooter />
+</Layout>

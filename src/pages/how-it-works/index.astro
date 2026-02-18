@@ -1,0 +1,131 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+
+const steps = [
+  {
+    title: 'Define deployment policy',
+    text: 'Set regions, provider preferences, and scaling boundaries for each game mode.',
+  },
+  {
+    title: 'Launch sessions through API',
+    text: 'Create sessions with one API call while the platform handles provisioning and routing.',
+  },
+  {
+    title: 'Observe live fleet behavior',
+    text: 'Track capacity, labels, health signals, and regional behavior during active traffic.',
+  },
+  {
+    title: 'Iterate with confidence',
+    text: 'Tune placement and cost strategy without re-architecting your backend orchestration layer.',
+  },
+];
+---
+
+<MarketingPageLayout
+  title="How Gameye Works: Session orchestration flow"
+  description="Understand the end-to-end Gameye workflow from policy definition to session launch, observability, and optimization."
+  canonical="https://gameye.com/how-it-works/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2026/02/gameye_architecture_white.png"
+  ogImageAlt="How Gameye works workflow"
+  schemaType="WebPage"
+  schemaName="How Gameye Works"
+>
+  <section class="section page-hero">
+    <div class="container">
+      <p class="subtitle">How It Works</p>
+      <h1>From request to running session in four operational steps.</h1>
+      <p class="lead">
+        Gameye abstracts infrastructure complexity so game teams can focus on multiplayer quality and release velocity.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container timeline">
+      {steps.map((step, index) => (
+        <article class="step">
+          <p class="index">Step {index + 1}</p>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container bridge">
+      <div>
+        <p class="subtitle">Next Paths</p>
+        <h2>Go deeper by audience.</h2>
+        <p>Review technical docs, compare approaches, or estimate cost using the MVP pricing workflow.</p>
+      </div>
+      <div class="links">
+        <a class="button secondary" href="/docs/">Developer documentation</a>
+        <a class="button secondary" href="/comparison/">Comparison pages</a>
+        <a class="button secondary" href="/pricing/">Pricing estimator</a>
+      </div>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .page-hero .lead {
+    margin-top: 1rem;
+    max-width: 66ch;
+    font-size: 1.15rem;
+  }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .step {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    background: var(--gy-color-white);
+    border-radius: var(--gy-radius-lg);
+    padding: 1.2rem;
+  }
+
+  .step .index {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gy-color-alt-dark-blue);
+    margin-bottom: 0.45rem;
+    font-weight: 500;
+  }
+
+  .step h3 {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .bridge {
+    border-radius: var(--gy-radius-lg);
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    background: var(--gy-color-bg-alt);
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .bridge p {
+    margin-top: 0.8rem;
+    max-width: 64ch;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 920px) {
+    .timeline {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,201 @@
+---
+import SectionParticles from './SectionParticles.astro';
+
+const stats = [
+  { value: '99.95%', target: 99.95, decimals: 2, suffix: '%', label: 'Availability target' },
+  { value: '<50ms', target: 50, decimals: 0, prefix: '<', prefixAtEnd: true, suffix: 'ms', label: 'Control-plane response median' },
+  { value: '25+', target: 25, decimals: 0, suffix: '+', label: 'Global regions covered' },
+  { value: '1000+', target: 1000, decimals: 0, suffix: '+', label: 'Sessions orchestrated daily' },
+];
+---
+
+<section class="section stats-section">
+  <SectionParticles count={6} />
+  <div class="container">
+    <div class="heading">
+      <p class="subtitle">Reusable Section</p>
+      <h2>Operational metrics block</h2>
+    </div>
+    <div class="stats-grid">
+      {stats.map((stat) => (
+        <article class="stat-card">
+          <p
+            class="stat-value"
+            data-target={stat.target}
+            data-decimals={stat.decimals}
+            data-prefix={stat.prefix ?? ''}
+            data-prefix-at-end={stat.prefixAtEnd ? 'true' : 'false'}
+            data-suffix={stat.suffix ?? ''}
+          >
+            {stat.value}
+          </p>
+          <p class="stat-label">{stat.label}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--gy-color-bg);
+    margin: 3.6rem 0;
+  }
+
+  .stats-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .heading {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .stats-grid {
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4rem;
+  }
+
+  .stat-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .stat-value {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--gy-color-dark-blue);
+  }
+
+  .stat-label {
+    margin-top: 0.6rem;
+    color: var(--gy-color-alt-dark-blue);
+    font-size: 1rem;
+  }
+
+  @media (max-width: 950px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const formatNumber = (value, decimals) => {
+    return value.toLocaleString(undefined, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  };
+
+  const animateMetric = (element, index) => {
+    const target = Number(element.dataset.target || 0);
+    const decimals = Number(element.dataset.decimals || 0);
+    const prefix = element.dataset.prefix || "";
+    const prefixAtEnd = element.dataset.prefixAtEnd === "true";
+    const suffix = element.dataset.suffix || "";
+
+    const duration = 760;
+    const delay = index * 70;
+    const start = performance.now() + delay;
+
+    const renderValue = (rawValue, progress) => {
+      const value = Math.min(target, rawValue);
+      const shownPrefix = prefixAtEnd ? (progress >= 1 ? prefix : "") : prefix;
+      element.textContent = `${shownPrefix}${formatNumber(value, decimals)}${suffix}`;
+    };
+
+    renderValue(0, 0);
+
+    const tick = (now) => {
+      if (now < start) {
+        window.requestAnimationFrame(tick);
+        return;
+      }
+
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      renderValue(target * eased, progress);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(tick);
+      } else {
+        renderValue(target, 1);
+      }
+    };
+
+    window.requestAnimationFrame(tick);
+  };
+
+  const initStatsCounter = () => {
+    const section = document.querySelector(".stats-section");
+    if (!(section instanceof HTMLElement) || section.dataset.animated === "true") return;
+
+    const values = Array.from(section.querySelectorAll(".stat-value"));
+    if (values.length === 0) return;
+
+    const startAnimation = () => {
+      if (section.dataset.animated === "true") return;
+      section.dataset.animated = "true";
+      values.forEach((value, index) => {
+        if (value instanceof HTMLElement) {
+          animateMetric(value, index);
+        }
+      });
+    };
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      values.forEach((value) => {
+        if (!(value instanceof HTMLElement)) return;
+        const target = Number(value.dataset.target || 0);
+        const decimals = Number(value.dataset.decimals || 0);
+        const prefix = value.dataset.prefix || "";
+        const suffix = value.dataset.suffix || "";
+        value.textContent = `${prefix}${formatNumber(target, decimals)}${suffix}`;
+      });
+      section.dataset.animated = "true";
+      return;
+    }
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              startAnimation();
+              observer.disconnect();
+              break;
+            }
+          }
+        },
+        { threshold: 0.35 }
+      );
+      observer.observe(section);
+      return;
+    }
+
+    startAnimation();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initStatsCounter, { once: true });
+  } else {
+    initStatsCounter();
+  }
+</script>

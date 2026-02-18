@@ -1,0 +1,108 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+
+const links = [
+  {
+    title: 'Quickstart',
+    href: '/docs/quickstart/',
+    summary: 'Launch your first orchestrated session path with practical defaults.',
+  },
+  {
+    title: 'API reference',
+    href: '/docs/api/',
+    summary: 'Review endpoints and payload contracts for session lifecycle operations.',
+  },
+  {
+    title: 'Integrations',
+    href: '/docs/integrations/',
+    summary: 'Connect engines, CI/CD, and telemetry workflows to deployment operations.',
+  },
+  {
+    title: 'Operations',
+    href: '/docs/operations/',
+    summary: 'Use runbooks and operational patterns for reliability and scaling.',
+  },
+];
+---
+
+<MarketingPageLayout
+  title="Gameye Docs Bridge: Developer documentation entrypoint"
+  description="Bridge marketing and developer documentation with curated quick links to setup, API, integrations, and operations."
+  canonical="https://gameye.com/docs/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2024/12/servers.svg"
+  ogImageAlt="Gameye documentation bridge"
+  schemaType="CollectionPage"
+  schemaName="Gameye Documentation"
+>
+  <section class="section page-hero">
+    <div class="container">
+      <p class="subtitle">Documentation</p>
+      <h1>Find the right technical docs path quickly.</h1>
+      <p class="lead">
+        Use this bridge page to route visitors from marketing pages into the correct docs track with minimal friction.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://docs.gameye.com/">Open full docs site</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cards">
+      {links.map((item) => (
+        <article class="card">
+          <h3>{item.title}</h3>
+          <p>{item.summary}</p>
+          <a href={item.href}>Open section</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .page-hero .lead {
+    margin-top: 1rem;
+    max-width: 66ch;
+    font-size: 1.15rem;
+  }
+
+  .actions {
+    margin-top: 1.4rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    background: var(--gy-color-white);
+    border-radius: var(--gy-radius-lg);
+    padding: 1.2rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .card h3 {
+    font-weight: 500;
+  }
+
+  .card a {
+    color: var(--gy-color-alt-dark-blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  @media (max-width: 820px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

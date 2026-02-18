@@ -1,0 +1,79 @@
+---
+import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+---
+
+<MarketingPageLayout
+  title="Contact Gameye: Speak with infrastructure specialists"
+  description="Connect with Gameye to discuss multiplayer orchestration requirements, migration planning, and pricing."
+  canonical="https://gameye.com/contact-us/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg"
+  ogImageAlt="Contact Gameye"
+  schemaType="ContactPage"
+  schemaName="Contact Gameye"
+>
+  <section class="section contact-page">
+    <div class="container split">
+      <div>
+        <p class="subtitle">Contact</p>
+        <h1>Talk to the team about your multiplayer infrastructure roadmap.</h1>
+        <p class="lead">
+          Share your workload shape, target regions, and launch goals. We’ll map a practical path from current stack
+          to production orchestration.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Contact channels</h3>
+        <p><strong>Email:</strong> hello@gameye.com</p>
+        <p><strong>Docs:</strong> <a href="https://docs.gameye.com/">docs.gameye.com</a></p>
+        <p><strong>Typical response:</strong> 1 business day</p>
+        <a class="button primary" href="/pricing/">Share workload details</a>
+      </div>
+    </div>
+  </section>
+</MarketingPageLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1rem;
+  }
+
+  .lead {
+    margin-top: 1rem;
+    max-width: 62ch;
+    font-size: 1.1rem;
+  }
+
+  .card {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-bg-alt);
+    padding: 1.25rem;
+  }
+
+  .card h3 {
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+
+  .card p {
+    margin-top: 0.45rem;
+  }
+
+  .card a {
+    color: inherit;
+  }
+
+  .card .button {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

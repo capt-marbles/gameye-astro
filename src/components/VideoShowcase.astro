@@ -1,0 +1,137 @@
+---
+import SectionParticles from './SectionParticles.astro';
+
+const videoPoster = 'https://gameye.com/wp-content/uploads/2024/12/Screenshot-2024-12-07-225513.png';
+const videoSource = 'https://gameye.com/wp-content/uploads/2026/02/My-Movie.mp4';
+---
+
+<section class="section video-showcase">
+  <SectionParticles count={6} />
+  <div class="container">
+    <div class="heading">
+      <p class="subtitle">Reusable Section</p>
+      <h2>Platform walkthrough video</h2>
+      <p>Use this block for demos, product explainers, and technical overviews without external embeds.</p>
+    </div>
+
+    <div class="video-shell" data-video-shell data-src={videoSource} data-poster={videoPoster}>
+      <button class="video-trigger" type="button" aria-label="Play platform walkthrough">
+        <img src={videoPoster} alt="Gameye platform video preview" loading="lazy" decoding="async" />
+        <span class="play-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-showcase {
+    position: relative;
+    overflow: hidden;
+    background: var(--gy-color-bg);
+    padding: 7.2rem 0;
+  }
+
+  .video-showcase .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  .heading p:last-child {
+    max-width: 64ch;
+    margin: 0.8rem auto 0;
+  }
+
+  .video-shell {
+    margin: 1.4rem auto 0;
+    width: min(1000px, 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    background: var(--gy-color-white);
+  }
+
+  .video-trigger {
+    border: none;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .video-trigger img,
+  .video-shell video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--gy-color-dark-blue) 84%, #fff);
+    display: grid;
+    place-items: center;
+  }
+
+  .play-icon::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 0.9rem solid var(--gy-color-light-green);
+    border-top: 0.55rem solid transparent;
+    border-bottom: 0.55rem solid transparent;
+    margin-left: 0.2rem;
+  }
+</style>
+
+<script>
+  const initVideoShowcase = () => {
+    document.querySelectorAll("[data-video-shell]").forEach((shell) => {
+      if (!(shell instanceof HTMLElement)) return;
+      if (shell.dataset.bound === "true") return;
+      shell.dataset.bound = "true";
+
+      const button = shell.querySelector(".video-trigger");
+      if (!(button instanceof HTMLButtonElement)) return;
+
+      button.addEventListener("click", () => {
+        if (shell.querySelector("video")) return;
+
+        const src = shell.dataset.src || "";
+        const poster = shell.dataset.poster || "";
+
+        const video = document.createElement("video");
+        video.controls = true;
+        video.autoplay = true;
+        video.preload = "metadata";
+        video.poster = poster;
+        video.playsInline = true;
+
+        const source = document.createElement("source");
+        source.src = src;
+        source.type = "video/mp4";
+
+        video.appendChild(source);
+        shell.replaceChildren(video);
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initVideoShowcase, { once: true });
+  } else {
+    initVideoShowcase();
+  }
+</script>

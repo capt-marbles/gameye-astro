@@ -1,0 +1,72 @@
+---
+import SectionParticles from './SectionParticles.astro';
+
+const features = [
+  {
+    title: 'Hybrid provider routing',
+    description: 'Session orchestration across cloud and bare metal providers with region-aware placement.',
+  },
+  {
+    title: 'Operational visibility',
+    description: 'Real-time operational surfaces for session, node, tag, and log monitoring workflows.',
+  },
+  {
+    title: 'Cost-aware scaling',
+    description: 'Planning-oriented controls designed to pair with pricing estimators and demand forecasts.',
+  },
+];
+---
+
+<section class="section feature-grid-section">
+  <SectionParticles count={8} />
+  <div class="container">
+    <p class="subtitle">Reusable Section</p>
+    <h2>Feature grid scaffold</h2>
+    <div class="grid">
+      {features.map((feature) => (
+        <article class="card">
+          <h3>{feature.title}</h3>
+          <p>{feature.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-grid-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-grid-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .grid {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+    border-radius: var(--gy-radius-lg);
+    background: var(--gy-color-white);
+    border: 1px solid color-mix(in srgb, var(--gy-color-light-blue) 35%, #fff);
+  }
+
+  .card h3 {
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

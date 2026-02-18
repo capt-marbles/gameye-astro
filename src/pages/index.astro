@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import HeroHome from '../components/HeroHome.astro';
+import ImageGridShowcase from '../components/ImageGridShowcase.astro';
+import TextImagePairs from '../components/TextImagePairs.astro';
+import CodeApiCallout from '../components/CodeApiCallout.astro';
+import FeatureGrid from '../components/FeatureGrid.astro';
+import LogoStrip from '../components/LogoStrip.astro';
+import StatsSection from '../components/StatsSection.astro';
+import TestimonialsCarousel from '../components/TestimonialsCarousel.astro';
+import VideoShowcase from '../components/VideoShowcase.astro';
+import DocsPreviewSection from '../components/DocsPreviewSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<Layout
+  title="Gameye Infrastructure: Global game server orchestration"
+  description="Astro marketing scaffold for Gameye, preserving current brand style while preparing reusable SEO-ready templates."
+  canonical="https://gameye.com/"
+  ogType="website"
+  ogImage="https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg"
+  ogImageAlt="Gameye Infrastructure orchestration platform"
+  schemaType="WebPage"
+  schemaName="Gameye Infrastructure: Global game server orchestration"
+>
+  <SiteHeader overlay />
+  <main>
+    <HeroHome />
+    <ImageGridShowcase />
+    <TextImagePairs />
+    <CodeApiCallout />
+    <FeatureGrid />
+    <LogoStrip />
+    <StatsSection />
+    <TestimonialsCarousel />
+    <VideoShowcase />
+    <DocsPreviewSection />
+    <FaqSection />
+    <CtaBand />
+  </main>
+  <SiteFooter />
+</Layout>

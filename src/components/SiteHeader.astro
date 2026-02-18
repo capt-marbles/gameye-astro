@@ -1,0 +1,96 @@
+---
+interface Props {
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+---
+
+<header class:list={['site-header', overlay && 'overlay']}>
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label="Gameye Home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">Gameye Infrastructure</span>
+    </a>
+
+    <nav aria-label="Primary" class="nav">
+      <a href="/how-it-works/">How it works</a>
+      <a href="/comparison/">Comparisons</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/docs/">Docs</a>
+    </nav>
+
+    <a class="button primary" href="/contact-us/">Contact us</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    backdrop-filter: blur(8px);
+    background: color-mix(in srgb, var(--gy-color-bg) 92%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--gy-color-light-blue) 20%, #fff);
+  }
+
+  .site-header.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: color-mix(in srgb, #ffffff 82%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--gy-color-light-blue) 22%, #fff);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--gy-color-heading);
+    white-space: nowrap;
+  }
+
+  .brand-mark {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--gy-radius-sm);
+    background: var(--gy-color-dark-blue);
+  }
+
+  .nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav a {
+    text-decoration: none;
+    color: var(--gy-color-nav);
+  }
+
+  .nav a:hover {
+    color: var(--gy-color-dark-blue);
+  }
+
+  @media (max-width: 900px) {
+    .nav {
+      display: none;
+    }
+
+    .brand-text {
+      font-size: 0.95rem;
+    }
+  }
+</style>

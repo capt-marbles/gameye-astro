@@ -1,0 +1,137 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+type JsonLdNode = Record<string, unknown>;
+
+interface Props {
+	title?: string;
+	description?: string;
+	canonical?: string;
+	ogImage?: string;
+	ogImageAlt?: string;
+	ogType?: string;
+	twitterCard?: string;
+	schemaType?: string;
+	schemaName?: string;
+	structuredData?: JsonLdNode | JsonLdNode[];
+	noindex?: boolean;
+}
+
+const SITE_URL = 'https://gameye.com';
+const DEFAULT_OG_IMAGE = 'https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg';
+
+const {
+	title = 'Gameye Infrastructure: Global game server orchestration',
+	description = 'Gameye Infrastructure is a dedicated game server orchestration platform for scalable, secure multiplayer hosting.',
+	canonical = `${SITE_URL}/`,
+	ogImage = DEFAULT_OG_IMAGE,
+	ogImageAlt = 'Gameye Infrastructure platform',
+	ogType = 'website',
+	twitterCard = 'summary_large_image',
+	schemaType = 'WebPage',
+	schemaName = title,
+	structuredData = [],
+	noindex = false,
+} = Astro.props;
+
+const canonicalUrl = new URL(canonical, SITE_URL).toString();
+const siteOrigin = new URL(canonicalUrl).origin;
+const organizationId = `${siteOrigin}/#/schema/Organization`;
+const websiteId = `${siteOrigin}/#/schema/WebSite`;
+const pageId = `${canonicalUrl}#/schema/${schemaType}`;
+const robots = noindex ? 'noindex, nofollow' : 'index, follow';
+
+const additionalGraph = Array.isArray(structuredData)
+	? structuredData
+	: structuredData
+		? [structuredData]
+		: [];
+
+const jsonLdGraph: JsonLdNode[] = [
+	{
+		'@type': 'Organization',
+		'@id': organizationId,
+		name: 'Gameye Infrastructure',
+		url: siteOrigin,
+		logo: {
+			'@type': 'ImageObject',
+			url: `${siteOrigin}/wp-content/uploads/2023/11/cropped-favicon.png`,
+		},
+	},
+	{
+		'@type': 'WebSite',
+		'@id': websiteId,
+		url: `${siteOrigin}/`,
+		name: 'Gameye Infrastructure',
+		description,
+		inLanguage: 'en-GB',
+		potentialAction: {
+			'@type': 'SearchAction',
+			target: {
+				'@type': 'EntryPoint',
+				urlTemplate: `${siteOrigin}/search/{search_term_string}/`,
+			},
+			'query-input': 'required name=search_term_string',
+		},
+		publisher: {
+			'@id': organizationId,
+		},
+	},
+	{
+		'@type': schemaType,
+		'@id': pageId,
+		url: canonicalUrl,
+		name: schemaName,
+		description,
+		inLanguage: 'en-GB',
+		isPartOf: {
+			'@id': websiteId,
+		},
+		about: {
+			'@id': organizationId,
+		},
+	},
+	...additionalGraph,
+];
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': jsonLdGraph,
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="robots" content={robots} />
+		<link rel="canonical" href={canonicalUrl} />
+
+		<meta property="og:site_name" content="Gameye Infrastructure" />
+		<meta property="og:locale" content="en_GB" />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:alt" content={ogImageAlt} />
+
+		<meta name="twitter:card" content={twitterCard} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+	</head>
+	<body>
+		<slot />
+		<script type="module" src="/scripts/section-particles.js"></script>
+	</body>
+</html>
