@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "profile:marketing": "node scripts/profile-marketing-build.mjs --json=reports/performance/marketing-build-profile.json --markdown=reports/performance/marketing-build-profile.md",
-    "check:parity": "node scripts/check-llms-sitemap-parity.mjs"
+    "check:parity": "node scripts/check-llms-sitemap-parity.mjs",
+    "check:launch": "node scripts/check-launch-readiness.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
