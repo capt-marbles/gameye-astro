@@ -63,6 +63,14 @@ const faqStructuredData = {
   </section>
 
   <FaqSection />
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/docs/">Open documentation hub</a>
+      <a href="/pricing/">Use pricing estimator</a>
+      <a href="/contact-us/">Talk to the team</a>
+    </div>
+  </section>
 </MarketingPageLayout>
 
 <style>
@@ -70,5 +78,19 @@ const faqStructuredData = {
     margin-top: 1rem;
     max-width: 66ch;
     font-size: 1.15rem;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
   }
 </style>

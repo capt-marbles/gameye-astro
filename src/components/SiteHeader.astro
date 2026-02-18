@@ -3,7 +3,25 @@ interface Props {
   overlay?: boolean;
 }
 
+interface NavLink {
+  href: string;
+  label: string;
+  match?: 'exact' | 'prefix';
+}
+
 const { overlay = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const navLinks: NavLink[] = [
+  { href: '/platform/', label: 'Platform', match: 'exact' },
+  { href: '/how-it-works/', label: 'How it works', match: 'exact' },
+  { href: '/comparison/', label: 'Comparison', match: 'exact' },
+  { href: '/pricing/', label: 'Pricing', match: 'exact' },
+  { href: '/docs/', label: 'Docs', match: 'prefix' },
+];
+
+const isActive = (href: string, match: NavLink['match'] = 'exact') =>
+  match === 'prefix' ? currentPath === href || currentPath.startsWith(href) : currentPath === href;
 ---
 
 <header class:list={['site-header', overlay && 'overlay']}>
@@ -14,10 +32,11 @@ const { overlay = false } = Astro.props;
     </a>
 
     <nav aria-label="Primary" class="nav">
-      <a href="/how-it-works/">How it works</a>
-      <a href="/comparison/">Comparisons</a>
-      <a href="/pricing/">Pricing</a>
-      <a href="/docs/">Docs</a>
+      {navLinks.map((link) => (
+        <a href={link.href} aria-current={isActive(link.href, link.match) ? 'page' : undefined}>
+          {link.label}
+        </a>
+      ))}
     </nav>
 
     <a class="button primary" href="/contact-us/">Contact us</a>
@@ -78,6 +97,11 @@ const { overlay = false } = Astro.props;
   .nav a {
     text-decoration: none;
     color: var(--gy-color-nav);
+  }
+
+  .nav a[aria-current='page'] {
+    color: var(--gy-color-dark-blue);
+    font-weight: 500;
   }
 
   .nav a:hover {

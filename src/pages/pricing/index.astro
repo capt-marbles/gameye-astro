@@ -64,6 +64,15 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
       </aside>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/platform/">Explore platform capabilities</a>
+      <a href="/comparison/">Compare deployment models</a>
+      <a href="/how-it-works/">Understand launch workflow</a>
+      <a href="/docs/">Review technical docs</a>
+    </div>
+  </section>
 </MarketingPageLayout>
 
 <style>
@@ -131,6 +140,20 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
 
   .result .button {
     margin-top: 1rem;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
   }
 
   @media (max-width: 920px) {

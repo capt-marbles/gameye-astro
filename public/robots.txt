@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /docs/quickstart/
+Disallow: /docs/api/
+Disallow: /docs/integrations/
+Disallow: /docs/operations/
+
+Sitemap: https://gameye.com/sitemap-index.xml

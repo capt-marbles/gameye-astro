@@ -70,6 +70,15 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
       <a class="button primary" href="/contact-us/">Request comparison workshop</a>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/platform/">Review platform architecture</a>
+      <a href="/how-it-works/">See orchestration flow</a>
+      <a href="/pricing/">Run a pricing estimate</a>
+      <a href="/case-studies/">Read case studies</a>
+    </div>
+  </section>
 </MarketingPageLayout>
 
 <style>
@@ -117,5 +126,19 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
 
   .cta-box .button {
     margin-top: 1.1rem;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
   }
 </style>
