@@ -59,6 +59,15 @@ const links = [
       ))}
     </div>
   </section>
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/platform/">Platform overview</a>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/pricing/">Pricing estimator</a>
+      <a href="/comparison/">Comparison page</a>
+    </div>
+  </section>
 </MarketingPageLayout>
 
 <style>
@@ -98,6 +107,20 @@ const links = [
     color: var(--gy-color-alt-dark-blue);
     text-decoration: none;
     font-weight: 500;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
   }
 
   @media (max-width: 820px) {

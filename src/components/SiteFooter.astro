@@ -7,19 +7,30 @@
       </p>
     </section>
 
-    <nav aria-label="Footer">
-      <h3>Explore</h3>
+    <nav aria-label="Product links" class="link-column">
+      <h3>Product</h3>
       <ul>
+        <li><a href="/platform/">Platform</a></li>
         <li><a href="/how-it-works/">How it works</a></li>
-        <li><a href="/comparison/">Comparisons</a></li>
+        <li><a href="/comparison/">Comparison</a></li>
         <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/case-studies/">Case studies</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Resource links" class="link-column">
+      <h3>Resources</h3>
+      <ul>
         <li><a href="/docs/">Documentation</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="https://docs.gameye.com/">Full docs portal</a></li>
+        <li><a href="/contact-us/">Contact</a></li>
       </ul>
     </nav>
 
     <section class="actions">
       <a class="button primary" href="/contact-us/">Talk to sales</a>
-      <a class="button secondary" href="/faq/">Read FAQ</a>
+      <a class="button secondary" href="/pricing/">Estimate pricing</a>
     </section>
   </div>
 
@@ -38,7 +49,7 @@
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
     gap: 2rem;
     align-items: start;
   }
@@ -54,7 +65,7 @@
     color: var(--gy-color-off-white);
   }
 
-  ul {
+  .link-column ul {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -92,6 +103,12 @@
     padding-top: 1.5rem;
     border-top: 1px solid color-mix(in srgb, var(--gy-color-light-green) 25%, transparent);
     color: color-mix(in srgb, var(--gy-color-off-white) 80%, transparent);
+  }
+
+  @media (max-width: 1120px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 900px) {

@@ -1,5 +1,20 @@
 ---
 import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+
+const studyThemes = [
+  {
+    title: 'Migration outcomes',
+    text: 'How studios moved from bespoke hosting to orchestrated deployment without service disruption.',
+  },
+  {
+    title: 'Latency and reliability',
+    text: 'Regional placement and operational response patterns that improved match stability.',
+  },
+  {
+    title: 'Cost and scale control',
+    text: 'Provider-mix strategies used to handle growth and event-driven concurrency spikes.',
+  },
+];
 ---
 
 <MarketingPageLayout
@@ -25,6 +40,26 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
       </div>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container cards">
+      {studyThemes.map((item) => (
+        <article class="card">
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container quick-links">
+      <a href="/how-it-works/">See delivery workflow</a>
+      <a href="/comparison/">Review platform comparisons</a>
+      <a href="/pricing/">Estimate infrastructure cost</a>
+      <a href="/docs/">Open documentation hub</a>
+    </div>
+  </section>
 </MarketingPageLayout>
 
 <style>
@@ -39,5 +74,43 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    background: var(--gy-color-white);
+    border-radius: var(--gy-radius-lg);
+    padding: 1.2rem;
+  }
+
+  .card h3 {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-links a {
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 16%, #fff);
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  @media (max-width: 960px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
