@@ -35,7 +35,7 @@ const {
 	noindex = false,
 } = Astro.props;
 
-const chatbotEnabled = (import.meta.env.PUBLIC_CHATBOT_ENABLED ?? 'true').toLowerCase() === 'true';
+const chatbotEnabled = (import.meta.env.PUBLIC_CHATBOT_ENABLED ?? 'false').toLowerCase() === 'true';
 const chatbotApiEndpoint = import.meta.env.PUBLIC_CHATBOT_API_ENDPOINT ?? '';
 const chatbotMinConfidence = import.meta.env.PUBLIC_CHATBOT_MIN_CONFIDENCE ?? '0.62';
 
