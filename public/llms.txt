@@ -1,0 +1,10 @@
+# Gameye AI Context Map
+site: https://gameye.com
+sitemap: https://gameye.com/sitemap-index.xml
+docs_hub: https://gameye.com/docs/
+docs_home: https://docs.gameye.com/
+quickstart: https://docs.gameye.com/getting-started/quickstart
+api_reference: https://docs.gameye.com/api/reference
+integrations: https://docs.gameye.com/guides/integrations
+operations: https://docs.gameye.com/troubleshooting
+contact: https://gameye.com/contact-us/
