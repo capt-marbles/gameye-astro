@@ -28,3 +28,6 @@ jobs:
 
       - name: Validate llms/sitemap/docs parity
         run: npm run check:parity
+
+      - name: Validate launch readiness
+        run: npm run check:launch

@@ -30,6 +30,7 @@ These reports track HTML/JS/CSS footprint and budget checks to support CWV harde
 - `npm run preview`: preview built site
 - `npm run profile:marketing`: generate build footprint report
 - `npm run check:parity`: validate `llms.txt`, sitemap outputs, and docs bridge parity
+- `npm run check:launch`: run launch QA checks for links, sitemap, bridge routes, and analytics events
 
 ## AI Chatbot Integration (GAM-20)
 
@@ -62,3 +63,19 @@ This project now includes shared cross-site navigation patterns with `docs.gamey
 - required `llms.txt` URLs (sitemap, docs hub, docs canonical routes)
 - sitemap expectations (`/docs/` included, noindex bridge pages excluded)
 - docs bridge index links match canonical docs destinations
+
+## Launch Readiness Automation (GAM-23)
+
+Run after a production build:
+
+```sh
+npm run build
+npm run check:launch
+```
+
+`npm run check:launch` enforces:
+
+- no broken internal links or missing built assets
+- sitemap include/exclude coverage for launch-critical routes
+- noindex + canonical docs target behavior on docs bridge pages
+- pricing estimator and chatbot analytics event instrumentation
