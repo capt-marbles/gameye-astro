@@ -8,6 +8,7 @@ function clampDpr() {
 function makeParticle(width, height) {
   const size = 8 + Math.random() * 22;
   const speed = 0.15 + Math.random() * 0.85;
+
   return {
     x: Math.random() * width,
     y: Math.random() * height,
@@ -17,19 +18,20 @@ function makeParticle(width, height) {
     angle: Math.random() * Math.PI * 2,
     rotateSpeed: Math.random() * 0.02 - 0.01,
     opacity: 0.15 + Math.random() * 0.25,
-    opacityStep: 0.001 + Math.random() * 0.003
+    opacityStep: 0.001 + Math.random() * 0.003,
   };
 }
 
 function drawParticle(ctx, particle, color) {
-  const r = particle.size;
+  const radius = particle.size;
+
   ctx.save();
   ctx.translate(particle.x, particle.y);
   ctx.rotate(particle.angle);
   ctx.beginPath();
-  ctx.moveTo(0, -r);
-  ctx.lineTo(r * 0.866, r * 0.5);
-  ctx.lineTo(-r * 0.866, r * 0.5);
+  ctx.moveTo(0, -radius);
+  ctx.lineTo(radius * 0.866, radius * 0.5);
+  ctx.lineTo(-radius * 0.866, radius * 0.5);
   ctx.closePath();
   ctx.fillStyle = `rgba(${color}, ${particle.opacity})`;
   ctx.fill();
@@ -53,19 +55,32 @@ function setupCanvas(canvas) {
   let width = 1;
   let height = 1;
   let running = false;
+  let visible = !document.hidden;
+  let inViewport = false;
+  let observer = null;
 
   const resize = () => {
     const rect = layer.getBoundingClientRect();
     width = Math.max(1, rect.width);
     height = Math.max(1, rect.height);
+
     const dpr = clampDpr();
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
 
+  const ensureParticles = () => {
+    if (particles.length > 0) return;
+
+    particles.push(
+      ...Array.from({ length: particleCount }, () => makeParticle(width, height))
+    );
+  };
+
   const tick = () => {
     if (!running) return;
+
     ctx.clearRect(0, 0, width, height);
 
     for (const particle of particles) {
@@ -92,31 +107,80 @@ function setupCanvas(canvas) {
     frame = window.requestAnimationFrame(tick);
   };
 
+  const shouldRun = () => !reducedMotionQuery.matches && visible && inViewport;
+
   const start = () => {
-    if (running || reducedMotionQuery.matches) return;
+    if (running || !shouldRun()) return;
+
+    ensureParticles();
     running = true;
-    if (particles.length === 0) {
-      particles.push(...Array.from({ length: particleCount }, () => makeParticle(width, height)));
-    }
     tick();
   };
 
   const stop = () => {
     running = false;
+
     if (frame) {
       window.cancelAnimationFrame(frame);
       frame = 0;
     }
+
     ctx.clearRect(0, 0, width, height);
   };
 
+  const sync = () => {
+    if (shouldRun()) {
+      start();
+      return;
+    }
+
+    stop();
+  };
+
+  const onResize = () => {
+    resize();
+    sync();
+  };
+
+  const onVisibility = () => {
+    visible = !document.hidden;
+    sync();
+  };
+
+  if ("IntersectionObserver" in window) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.target !== layer) continue;
+          inViewport = entry.isIntersecting;
+          sync();
+        }
+      },
+      { threshold: 0.08 }
+    );
+
+    observer.observe(layer);
+  } else {
+    inViewport = true;
+  }
+
+  window.addEventListener("resize", onResize, { passive: true });
+  document.addEventListener("visibilitychange", onVisibility);
+
   resize();
-  start();
+  sync();
 
-  const onResize = () => resize();
-  window.addEventListener("resize", onResize);
-
-  instances.set(canvas, { start, stop, resize, onResize });
+  instances.set(canvas, {
+    sync,
+    destroy() {
+      stop();
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibility);
+      if (observer) {
+        observer.disconnect();
+      }
+    },
+  });
 }
 
 function initAllParticleLayers() {
@@ -129,11 +193,7 @@ function initAllParticleLayers() {
 
 function handleMotionChange() {
   for (const instance of instances.values()) {
-    if (reducedMotionQuery.matches) {
-      instance.stop();
-    } else {
-      instance.start();
-    }
+    instance.sync();
   }
 }
 
@@ -143,4 +203,8 @@ if (document.readyState === "loading") {
   initAllParticleLayers();
 }
 
-reducedMotionQuery.addEventListener("change", handleMotionChange);
+if (typeof reducedMotionQuery.addEventListener === "function") {
+  reducedMotionQuery.addEventListener("change", handleMotionChange);
+} else if (typeof reducedMotionQuery.addListener === "function") {
+  reducedMotionQuery.addListener(handleMotionChange);
+}

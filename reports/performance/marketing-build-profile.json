@@ -1,0 +1,115 @@
+{
+  "generatedAt": "2026-02-18T20:43:25.525Z",
+  "distPath": "/Users/awalker/Documents/Code Project/gameye-astro/dist",
+  "pages": {
+    "count": 22,
+    "totalHtmlBytes": 307689,
+    "largestPages": [
+      {
+        "page": "index.html",
+        "bytes": 38661,
+        "runtimeInlineJsBytes": 0
+      },
+      {
+        "page": "comparison/gameye-vs-edgegap/index.html",
+        "bytes": 18467,
+        "runtimeInlineJsBytes": 0
+      },
+      {
+        "page": "comparison/gameye-vs-gamelift/index.html",
+        "bytes": 18345,
+        "runtimeInlineJsBytes": 0
+      },
+      {
+        "page": "comparison/gameye-vs-hathora/index.html",
+        "bytes": 18287,
+        "runtimeInlineJsBytes": 0
+      },
+      {
+        "page": "comparison/gameye-vs-agones/index.html",
+        "bytes": 18279,
+        "runtimeInlineJsBytes": 0
+      }
+    ]
+  },
+  "scripts": {
+    "runtimeInlineJsBytes": 0,
+    "jsonLdBytes": 39712,
+    "externalScriptTags": 3,
+    "jsAssetCount": 4,
+    "totalJsBytes": 17420,
+    "totalJsGzipBytes": 5547,
+    "largestJsAssets": [
+      {
+        "file": "scripts/home-interactions.js",
+        "bytes": 7890,
+        "gzipBytes": 2177
+      },
+      {
+        "file": "scripts/section-particles.js",
+        "bytes": 4971,
+        "gzipBytes": 1629
+      },
+      {
+        "file": "_astro/index.astro_astro_type_script_index_0_lang.CabVeKjI.js",
+        "bytes": 4147,
+        "gzipBytes": 1483
+      },
+      {
+        "file": "scripts/load-section-particles.js",
+        "bytes": 412,
+        "gzipBytes": 258
+      }
+    ]
+  },
+  "styles": {
+    "cssAssetCount": 3,
+    "totalCssBytes": 30809,
+    "totalCssGzipBytes": 6574,
+    "largestCssAssets": [
+      {
+        "file": "_astro/index.CJpXKZZz.css",
+        "bytes": 18394,
+        "gzipBytes": 3545
+      },
+      {
+        "file": "_astro/index.9kCuNbP8.css",
+        "bytes": 7216,
+        "gzipBytes": 1967
+      },
+      {
+        "file": "_astro/index.D9vDGW8u.css",
+        "bytes": 5199,
+        "gzipBytes": 1062
+      }
+    ]
+  },
+  "remoteMedia": {
+    "uniqueCount": 32,
+    "sample": [
+      "https://gameye.com/wp-content/uploads/2026/02/image-8.png",
+      "https://gameye.com/wp-content/uploads/2023/11/cropped-favicon.png",
+      "https://gameye.com/wp-content/uploads/2025/12/JNbO8zg31l2vb9INXQvLd.png",
+      "https://gameye.com/wp-content/uploads/2025/01/hidden-costs-blog-cover.jpg",
+      "https://gameye.com/wp-content/uploads/2025/08/nubs-cover-min.jpg",
+      "https://gameye.com/wp-content/uploads/2024/01/chivalry2-testimonial.png",
+      "https://gameye.com/wp-content/uploads/2023/12/cropped-Gameye-server-hosting.jpg",
+      "https://gameye.com/wp-content/uploads/2024/12/tools.svg",
+      "https://gameye.com/wp-content/uploads/2024/12/servers.svg",
+      "https://gameye.com/wp-content/uploads/2026/02/gameye_architecture_white.png"
+    ]
+  },
+  "budgets": {
+    "maxHtmlPageBytes": 50000,
+    "runtimeInlineJsBytes": 5000,
+    "totalJsBytes": 25000,
+    "totalCssBytes": 45000
+  },
+  "budgetChecks": {
+    "maxHtmlPageBytes": true,
+    "runtimeInlineJsBytes": true,
+    "totalJsBytes": true,
+    "totalCssBytes": true
+  },
+  "allBudgetsPassing": true
+}
