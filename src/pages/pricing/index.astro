@@ -1,76 +1,281 @@
 ---
 import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
+
+const pricingFaq = [
+  {
+    question: 'How accurate is the pricing estimator?',
+    answer:
+      'The calculator is directional and designed for planning. It models workload shape, region mix, burst behavior, and platform profile, but production quotes are finalized with your real telemetry and SLO targets.',
+  },
+  {
+    question: 'Can we model multi-provider deployments?',
+    answer:
+      'Yes. Region and profile controls are designed to represent mixed cloud and bare metal footprints. Final deployment policy can be tuned per region, mode, and traffic pattern.',
+  },
+  {
+    question: 'What is included in the estimate?',
+    answer:
+      'The model focuses on orchestration-related infrastructure cost. Support tier, managed services scope, and workload-specific optimizations are finalized during solution design.',
+  },
+  {
+    question: 'Can teams migrate in phases while controlling cost risk?',
+    answer:
+      'Yes. Most teams stage migration by game mode and region, compare cost and reliability baselines, then expand once performance and operations metrics are stable.',
+  },
+];
+
+const pricingFaqStructuredData = {
+  '@type': 'FAQPage',
+  mainEntity: pricingFaq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
+const breadcrumbStructuredData = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://gameye.com/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Pricing',
+      item: 'https://gameye.com/pricing/',
+    },
+  ],
+};
+
+const serviceStructuredData = {
+  '@type': 'Service',
+  name: 'Gameye Infrastructure Orchestration',
+  serviceType: 'Multiplayer game server orchestration',
+  provider: {
+    '@type': 'Organization',
+    name: 'Gameye Infrastructure',
+    url: 'https://gameye.com/',
+  },
+  areaServed: 'Global',
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'Game studios and live operations teams',
+  },
+};
 ---
 
 <MarketingPageLayout
-  title="Gameye Pricing: Estimate multiplayer orchestration cost"
-  description="Use the Gameye pricing MVP estimator to model monthly orchestration cost by region, workload shape, and server profile."
+  title="Gameye Pricing Estimator: Model multiplayer infrastructure cost"
+  description="Use the interactive Gameye pricing estimator to model monthly orchestration cost by workload profile, traffic shape, region strategy, and support scope."
   canonical="https://gameye.com/pricing/"
   ogType="website"
   ogImage="https://gameye.com/wp-content/uploads/2024/12/Screenshot-2024-12-07-225513.png"
-  ogImageAlt="Gameye pricing estimator preview"
+  ogImageAlt="Gameye pricing estimator"
   schemaType="WebPage"
-  schemaName="Gameye Pricing"
+  schemaName="Gameye Pricing Estimator"
+  structuredData={[pricingFaqStructuredData, breadcrumbStructuredData, serviceStructuredData]}
 >
   <section class="section page-hero">
     <div class="container">
-      <p class="subtitle">Pricing</p>
-      <h1>Estimate monthly orchestration cost in minutes.</h1>
+      <p class="subtitle">Pricing Estimator</p>
+      <h1>Model infrastructure cost with workload-aware assumptions.</h1>
       <p class="lead">
-        This MVP estimator is intentionally simple and designed for discovery conversations. A full production
-        calculator with scenario exports will follow in the dedicated pricing phase.
+        Configure player volume, peak concurrency, region profile, and burst behavior to generate a practical monthly
+        estimate. Use this as a planning input before detailed workload validation.
       </p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container estimator" data-estimator>
-      <div class="controls">
-        <label>
-          Region mix
-          <select data-field="region">
-            <option value="1">Balanced global mix</option>
-            <option value="0.92">NA-heavy</option>
-            <option value="0.97">EU-heavy</option>
-            <option value="1.08">APAC-heavy</option>
-          </select>
-        </label>
-
-        <label>
-          Concurrent sessions
-          <input data-field="sessions" type="number" min="1" value="120" />
-        </label>
-
-        <label>
-          Average hours per day
-          <input data-field="hours" type="number" min="1" max="24" value="8" />
-        </label>
-
-        <label>
-          Server profile
-          <select data-field="profile">
-            <option value="0.14">Standard CPU</option>
-            <option value="0.18">High-frequency CPU</option>
-            <option value="0.22">Memory optimized</option>
-          </select>
-        </label>
+    <div class="container estimator-shell" data-pricing-estimator>
+      <div class="scenario-panel">
+        <p class="kicker">Preset scenarios</p>
+        <div class="scenario-buttons">
+          <button type="button" data-scenario="indie-launch" class="scenario active">Indie launch</button>
+          <button type="button" data-scenario="midscale-live" class="scenario">Mid-scale live ops</button>
+          <button type="button" data-scenario="event-peak" class="scenario">Event peak</button>
+        </div>
       </div>
 
-      <aside class="result">
-        <p class="kicker">Estimated monthly infrastructure</p>
-        <p class="price" data-price>$0</p>
-        <p class="note">Directional estimate only. Contact us for exact workload pricing.</p>
-        <a class="button primary" href="/contact-us/">Request pricing review</a>
-      </aside>
+      <div class="estimator-grid">
+        <div class="controls">
+          <label>
+            Monthly active players
+            <input data-field="monthlyPlayers" type="number" min="1000" step="1000" value="180000" />
+          </label>
+
+          <label>
+            Peak concurrent users (CCU)
+            <input data-field="peakCcu" type="number" min="100" step="50" value="1800" />
+          </label>
+
+          <label>
+            Average session length (minutes)
+            <input data-field="sessionMinutes" type="number" min="5" max="180" value="28" />
+          </label>
+
+          <label>
+            Region strategy
+            <select data-field="regionFactor">
+              <option value="0.94">Single-region focus (NA)</option>
+              <option value="1">Dual-region balance</option>
+              <option value="1.08" selected>Global footprint</option>
+              <option value="1.16">Global + edge-heavy</option>
+            </select>
+          </label>
+
+          <label>
+            Infrastructure profile
+            <select data-field="profileRate">
+              <option value="0.12">Standard compute profile</option>
+              <option value="0.16" selected>Performance profile</option>
+              <option value="0.2">Memory-optimized profile</option>
+            </select>
+          </label>
+
+          <label>
+            Burst multiplier
+            <input data-field="burstMultiplier" type="range" min="100" max="240" step="5" value="120" />
+            <span class="range-value" data-output="burst-label">1.20x</span>
+          </label>
+
+          <label>
+            Operations scope
+            <select data-field="opsFactor">
+              <option value="1">Self-managed operations</option>
+              <option value="1.12" selected>Shared operational support</option>
+              <option value="1.22">Expanded managed operations</option>
+            </select>
+          </label>
+        </div>
+
+        <aside class="results">
+          <p class="kicker">Estimated monthly cost</p>
+          <p class="price" data-output="monthly">$0</p>
+          <p class="note">
+            Confidence range:
+            <strong data-output="low">$0</strong>
+            to
+            <strong data-output="high">$0</strong>
+          </p>
+
+          <div class="result-grid">
+            <article>
+              <p class="label">Annualized run-rate</p>
+              <p class="value" data-output="annual">$0</p>
+            </article>
+            <article>
+              <p class="label">Estimated session hours/month</p>
+              <p class="value" data-output="sessionHours">0</p>
+            </article>
+            <article>
+              <p class="label">Cost per peak CCU</p>
+              <p class="value" data-output="perCcu">$0</p>
+            </article>
+            <article>
+              <p class="label">Estimated orchestration tier</p>
+              <p class="value" data-output="tier">Growth</p>
+            </article>
+          </div>
+
+          <div class="actions">
+            <a class="button primary" href="/contact-us/" data-track-cta="request-pricing-review">Request pricing review</a>
+            <a class="button secondary" href="/comparison/" data-track-cta="open-comparison-cluster">Compare alternatives</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container explain-grid">
+      <article class="panel">
+        <p class="subtitle">How this estimate is calculated</p>
+        <h2>Workload-first pricing model</h2>
+        <p>
+          The estimator combines peak concurrency behavior and player-session demand into total monthly session hours.
+          It then applies profile and regional multipliers so the output reflects deployment complexity, not just raw
+          compute.
+        </p>
+      </article>
+      <article class="panel">
+        <p class="subtitle">What affects price most</p>
+        <h2>Four primary cost drivers</h2>
+        <ul>
+          <li>Peak CCU and burst shape during events or promotions.</li>
+          <li>Region count and placement policy complexity.</li>
+          <li>Compute profile needed for tick rate and memory behavior.</li>
+          <li>Operational support scope across live incidents and optimization.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container stage-table-wrap">
+      <h2>Cost planning by growth stage</h2>
+      <table class="stage-table">
+        <thead>
+          <tr>
+            <th>Growth stage</th>
+            <th>Typical workload pattern</th>
+            <th>Priority</th>
+            <th>Recommended next step</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Launch</td>
+            <td>Single title, moderate regional spread, predictable daily spikes.</td>
+            <td>Fast setup + reliability baseline</td>
+            <td>Use estimator baseline and validate first region policy.</td>
+          </tr>
+          <tr>
+            <td>Growth</td>
+            <td>Multi-region footprint, seasonal peaks, higher concurrency volatility.</td>
+            <td>Cost/performance balance</td>
+            <td>Compare profile options and burst assumptions per mode.</td>
+          </tr>
+          <tr>
+            <td>Scale</td>
+            <td>Live-service operations, global traffic, event-driven surges.</td>
+            <td>Operational governance + margin control</td>
+            <td>Run architecture review and migration-by-region plan.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section faq-section">
+    <div class="container">
+      <p class="subtitle">Pricing FAQ</p>
+      <h2>Common planning questions</h2>
+      <div class="faq-list">
+        {pricingFaq.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container quick-links">
-      <a href="/platform/">Explore platform capabilities</a>
-      <a href="/comparison/">Compare deployment models</a>
-      <a href="/how-it-works/">Understand launch workflow</a>
-      <a href="/docs/">Review technical docs</a>
+      <a href="/platform/">Platform capabilities</a>
+      <a href="/how-it-works/">How orchestration works</a>
+      <a href="/comparison/">Comparison cluster</a>
+      <a href="/docs/">Technical documentation</a>
+      <a href="/case-studies/">Deployment outcomes</a>
     </div>
   </section>
 </MarketingPageLayout>
@@ -78,27 +283,68 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
 <style>
   .page-hero .lead {
     margin-top: 1rem;
-    max-width: 66ch;
-    font-size: 1.15rem;
+    max-width: 72ch;
+    font-size: 1.12rem;
   }
 
-  .estimator {
+  .estimator-shell {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
     gap: 1rem;
   }
 
+  .scenario-panel,
   .controls,
-  .result {
+  .results,
+  .panel {
     border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 14%, #fff);
     border-radius: var(--gy-radius-lg);
     background: var(--gy-color-white);
     padding: 1.2rem;
   }
 
+  .kicker {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gy-color-alt-dark-blue);
+    font-weight: 500;
+  }
+
+  .scenario-buttons {
+    margin-top: 0.7rem;
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .scenario {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 20%, #fff);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--gy-color-alt-dark-blue);
+    padding: 0.5rem 0.85rem;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .scenario.active {
+    border-color: var(--gy-color-dark-blue);
+    background: color-mix(in srgb, var(--gy-color-light-green) 30%, #fff);
+    color: var(--gy-color-dark-blue);
+    font-weight: 500;
+  }
+
+  .estimator-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1rem;
+  }
+
   .controls {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.9rem;
+    align-content: start;
   }
 
   label {
@@ -118,28 +364,131 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
     background: #fff;
   }
 
-  .kicker {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--gy-color-alt-dark-blue);
+  .range-value {
+    font-size: 0.9rem;
+    color: var(--gy-color-dark-blue);
     font-weight: 500;
   }
 
-  .price {
-    margin-top: 0.5rem;
+  .results .price {
+    margin-top: 0.45rem;
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     color: var(--gy-color-dark-blue);
   }
 
-  .note {
+  .results .note {
     margin-top: 0.7rem;
     color: var(--gy-color-alt-dark-blue);
   }
 
-  .result .button {
+  .result-grid {
     margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .result-grid article {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 10%, #fff);
+    border-radius: var(--gy-radius-md);
+    background: var(--gy-color-bg-alt);
+    padding: 0.75rem;
+  }
+
+  .result-grid .label {
+    font-size: 0.82rem;
+    color: var(--gy-color-alt-dark-blue);
+  }
+
+  .result-grid .value {
+    margin-top: 0.35rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--gy-color-dark-blue);
+  }
+
+  .results .actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .explain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .panel h2 {
+    margin-top: 0;
+    font-size: 2rem;
+  }
+
+  .panel p {
+    margin-top: 0.75rem;
+    max-width: 62ch;
+  }
+
+  .panel ul {
+    margin: 0.75rem 0 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .stage-table-wrap {
+    overflow-x: auto;
+  }
+
+  .stage-table-wrap h2 {
+    margin-bottom: 0.9rem;
+  }
+
+  .stage-table {
+    width: 100%;
+    min-width: 58rem;
+    border-collapse: collapse;
+    background: var(--gy-color-white);
+  }
+
+  .stage-table th,
+  .stage-table td {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 20%, #fff);
+    padding: 0.85rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .stage-table thead th {
+    background: var(--gy-color-bg-alt);
+    font-weight: 500;
+  }
+
+  .faq-section h2 {
+    margin-bottom: 0.95rem;
+  }
+
+  .faq-list details {
+    border: 1px solid color-mix(in srgb, var(--gy-color-dark-blue) 12%, #fff);
+    border-radius: var(--gy-radius-md);
+    background: var(--gy-color-white);
+    padding: 0.9rem 1rem;
+  }
+
+  .faq-list details + details {
+    margin-top: 0.7rem;
+  }
+
+  .faq-list summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--gy-color-dark-blue);
+  }
+
+  .faq-list p {
+    margin-top: 0.6rem;
   }
 
   .quick-links {
@@ -156,58 +505,235 @@ import MarketingPageLayout from '../../layouts/MarketingPageLayout.astro';
     color: var(--gy-color-alt-dark-blue);
   }
 
-  @media (max-width: 920px) {
-    .estimator {
+  @media (max-width: 980px) {
+    .estimator-grid,
+    .explain-grid {
       grid-template-columns: 1fr;
+    }
+
+    .controls {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .result-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stage-table {
+      min-width: 46rem;
     }
   }
 </style>
 
 <script>
-  const initEstimator = () => {
-    document.querySelectorAll("[data-estimator]").forEach((root) => {
+  const PRICING_SCENARIOS = {
+    "indie-launch": {
+      monthlyPlayers: 180000,
+      peakCcu: 1800,
+      sessionMinutes: 28,
+      regionFactor: 1,
+      profileRate: 0.12,
+      burstMultiplier: 110,
+      opsFactor: 1,
+    },
+    "midscale-live": {
+      monthlyPlayers: 620000,
+      peakCcu: 5400,
+      sessionMinutes: 35,
+      regionFactor: 1.08,
+      profileRate: 0.16,
+      burstMultiplier: 135,
+      opsFactor: 1.12,
+    },
+    "event-peak": {
+      monthlyPlayers: 1600000,
+      peakCcu: 18000,
+      sessionMinutes: 42,
+      regionFactor: 1.16,
+      profileRate: 0.2,
+      burstMultiplier: 175,
+      opsFactor: 1.22,
+    },
+  };
+
+  const trackEvent = (eventName, payload) => {
+    const data = { event: eventName, ...payload };
+
+    if (Array.isArray(window.dataLayer)) {
+      window.dataLayer.push(data);
+    }
+
+    window.dispatchEvent(new CustomEvent("gameye:analytics", { detail: data }));
+  };
+
+  const formatCurrency = (value) =>
+    value.toLocaleString(undefined, {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+
+  const formatNumber = (value) =>
+    value.toLocaleString(undefined, {
+      maximumFractionDigits: 0,
+    });
+
+  const calcTier = (monthlyEstimate) => {
+    if (monthlyEstimate < 30000) return "Launch";
+    if (monthlyEstimate < 90000) return "Growth";
+    return "Scale";
+  };
+
+  const initPricingEstimator = () => {
+    document.querySelectorAll("[data-pricing-estimator]").forEach((root) => {
       if (!(root instanceof HTMLElement)) return;
       if (root.dataset.bound === "true") return;
       root.dataset.bound = "true";
 
-      const region = root.querySelector('[data-field="region"]');
-      const sessions = root.querySelector('[data-field="sessions"]');
-      const hours = root.querySelector('[data-field="hours"]');
-      const profile = root.querySelector('[data-field="profile"]');
-      const priceEl = root.querySelector("[data-price]");
+      const monthlyPlayers = root.querySelector('[data-field="monthlyPlayers"]');
+      const peakCcu = root.querySelector('[data-field="peakCcu"]');
+      const sessionMinutes = root.querySelector('[data-field="sessionMinutes"]');
+      const regionFactor = root.querySelector('[data-field="regionFactor"]');
+      const profileRate = root.querySelector('[data-field="profileRate"]');
+      const burstMultiplier = root.querySelector('[data-field="burstMultiplier"]');
+      const opsFactor = root.querySelector('[data-field="opsFactor"]');
 
-      if (!(region instanceof HTMLSelectElement)) return;
-      if (!(sessions instanceof HTMLInputElement)) return;
-      if (!(hours instanceof HTMLInputElement)) return;
-      if (!(profile instanceof HTMLSelectElement)) return;
-      if (!(priceEl instanceof HTMLElement)) return;
+      if (!(monthlyPlayers instanceof HTMLInputElement)) return;
+      if (!(peakCcu instanceof HTMLInputElement)) return;
+      if (!(sessionMinutes instanceof HTMLInputElement)) return;
+      if (!(regionFactor instanceof HTMLSelectElement)) return;
+      if (!(profileRate instanceof HTMLSelectElement)) return;
+      if (!(burstMultiplier instanceof HTMLInputElement)) return;
+      if (!(opsFactor instanceof HTMLSelectElement)) return;
+
+      const outputs = {
+        monthly: root.querySelector('[data-output="monthly"]'),
+        annual: root.querySelector('[data-output="annual"]'),
+        sessionHours: root.querySelector('[data-output="sessionHours"]'),
+        perCcu: root.querySelector('[data-output="perCcu"]'),
+        tier: root.querySelector('[data-output="tier"]'),
+        low: root.querySelector('[data-output="low"]'),
+        high: root.querySelector('[data-output="high"]'),
+        burstLabel: root.querySelector('[data-output="burst-label"]'),
+      };
+
+      const scenarioButtons = Array.from(root.querySelectorAll('[data-scenario]'));
+      const ctaLinks = Array.from(root.querySelectorAll('[data-track-cta]'));
+
+      let lastTrackedKey = "";
+      let trackingTimer = null;
 
       const calc = () => {
-        const regionFactor = Number(region.value || 1);
-        const sessionCount = Math.max(1, Number(sessions.value || 0));
-        const dailyHours = Math.min(24, Math.max(1, Number(hours.value || 0)));
-        const profileRate = Number(profile.value || 0);
+        const playerCount = Math.max(1000, Number(monthlyPlayers.value || 0));
+        const peak = Math.max(100, Number(peakCcu.value || 0));
+        const avgSession = Math.min(180, Math.max(5, Number(sessionMinutes.value || 0)));
+        const region = Number(regionFactor.value || 1);
+        const profile = Number(profileRate.value || 0.16);
+        const burst = Math.max(1, Number(burstMultiplier.value || 100) / 100);
+        const ops = Number(opsFactor.value || 1);
 
-        const monthly = sessionCount * dailyHours * 30 * profileRate * regionFactor;
-        priceEl.textContent = monthly.toLocaleString(undefined, {
-          style: "currency",
-          currency: "USD",
-          maximumFractionDigits: 0
+        const peakDrivenHours = peak * 30 * 2.5;
+        const playerDrivenHours = playerCount * (avgSession / 60) * 0.11;
+        const sessionHours = Math.max(peakDrivenHours, playerDrivenHours);
+
+        const monthlyEstimate = sessionHours * profile * region * burst * ops;
+        const low = monthlyEstimate * 0.82;
+        const high = monthlyEstimate * 1.18;
+        const annual = monthlyEstimate * 12;
+        const perCcu = monthlyEstimate / peak;
+        const tier = calcTier(monthlyEstimate);
+
+        if (outputs.monthly instanceof HTMLElement) outputs.monthly.textContent = formatCurrency(monthlyEstimate);
+        if (outputs.annual instanceof HTMLElement) outputs.annual.textContent = formatCurrency(annual);
+        if (outputs.sessionHours instanceof HTMLElement) outputs.sessionHours.textContent = formatNumber(sessionHours);
+        if (outputs.perCcu instanceof HTMLElement) outputs.perCcu.textContent = formatCurrency(perCcu);
+        if (outputs.tier instanceof HTMLElement) outputs.tier.textContent = tier;
+        if (outputs.low instanceof HTMLElement) outputs.low.textContent = formatCurrency(low);
+        if (outputs.high instanceof HTMLElement) outputs.high.textContent = formatCurrency(high);
+        if (outputs.burstLabel instanceof HTMLElement) outputs.burstLabel.textContent = `${burst.toFixed(2)}x`;
+
+        const trackPayload = {
+          monthly_estimate: Math.round(monthlyEstimate),
+          annual_estimate: Math.round(annual),
+          estimated_session_hours: Math.round(sessionHours),
+          peak_ccu: peak,
+          tier,
+        };
+
+        const trackingKey = JSON.stringify(trackPayload);
+        if (trackingKey !== lastTrackedKey) {
+          lastTrackedKey = trackingKey;
+          if (trackingTimer) clearTimeout(trackingTimer);
+          trackingTimer = window.setTimeout(() => {
+            trackEvent("pricing_estimator_updated", trackPayload);
+          }, 300);
+        }
+
+        return trackPayload;
+      };
+
+      const applyScenario = (scenarioKey) => {
+        const scenario = PRICING_SCENARIOS[scenarioKey];
+        if (!scenario) return;
+
+        monthlyPlayers.value = String(scenario.monthlyPlayers);
+        peakCcu.value = String(scenario.peakCcu);
+        sessionMinutes.value = String(scenario.sessionMinutes);
+        regionFactor.value = String(scenario.regionFactor);
+        profileRate.value = String(scenario.profileRate);
+        burstMultiplier.value = String(scenario.burstMultiplier);
+        opsFactor.value = String(scenario.opsFactor);
+
+        scenarioButtons.forEach((button) => {
+          if (!(button instanceof HTMLElement)) return;
+          const active = button.dataset.scenario === scenarioKey;
+          button.classList.toggle("active", active);
+        });
+
+        const payload = calc();
+        trackEvent("pricing_scenario_selected", {
+          scenario: scenarioKey,
+          monthly_estimate: payload.monthly_estimate,
+          tier: payload.tier,
         });
       };
 
-      [region, sessions, hours, profile].forEach((field) => {
+      scenarioButtons.forEach((button) => {
+        if (!(button instanceof HTMLButtonElement)) return;
+        button.addEventListener("click", () => {
+          const scenarioKey = button.dataset.scenario;
+          if (!scenarioKey) return;
+          applyScenario(scenarioKey);
+        });
+      });
+
+      ctaLinks.forEach((link) => {
+        if (!(link instanceof HTMLAnchorElement)) return;
+        link.addEventListener("click", () => {
+          const action = link.dataset.trackCta || "pricing_cta";
+          const payload = calc();
+          trackEvent("pricing_cta_clicked", {
+            action,
+            monthly_estimate: payload.monthly_estimate,
+            tier: payload.tier,
+          });
+        });
+      });
+
+      [monthlyPlayers, peakCcu, sessionMinutes, regionFactor, profileRate, burstMultiplier, opsFactor].forEach((field) => {
         field.addEventListener("input", calc);
         field.addEventListener("change", calc);
       });
 
-      calc();
+      applyScenario("indie-launch");
     });
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initEstimator, { once: true });
+    document.addEventListener("DOMContentLoaded", initPricingEstimator, { once: true });
   } else {
-    initEstimator();
+    initPricingEstimator();
   }
 </script>
